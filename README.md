@@ -59,24 +59,50 @@ Daqui em diante é escrever comandos, imagino como se fosse uma conversa com um 
 ## 1.3 Definir o layout e fonte do teclado do console
 Se não escolher o correto algumas teclas ficam digitando errado e vai atrapalhar. Esse comando mostra a lista de todos os layouts de teclado.
 ``` 
-# localectl list-keymaps
+localectl list-keymaps
 ```
 No Brasil se usa dois tipos de teclado ABNT, tem que escolher o certo. Caso seja um Mac a posição das teclas é diferente, mas o princípio é o mesmo. Também é possível remapear as teclas depois de finalizar a instalação e deixar identico aos outros computadores normais.
 
 ABNT (teclados que **não tem** a tecla `AltGr` à direita da barra de espaço e tem no máximo dois caracteres na mesma tecla) 
 ```
-# loadkeys br-abnt   
+loadkeys br-abnt   
 ```
 ABNT2 (teclados que **tem** a tecla `AltGr` à direita da barra de espaço e tem três caracteres na mesma tecla, por exemplo `+ = §`).
 ```
-# loadkeys br-abnt2   
+loadkeys br-abnt2   
 ```
-## 1.4 Definir o idioma
+## 1.4 Conectar na internet
+Se for uma conexão LAN pelo cabo de rede, então já deve estar funcionando, pra testar é só dar um comando de ping
+```
+ping google.com
+```
+Se for uma conexão via Wi-Fi, então use o comando pra entrar no menu de configuração de wi-fi
+```
+iwctl
+```
+<details>
+  Depois o comando pra listar as placas de rede e saber o nome do dispositivo pra usar na próxima etapa
+> Se for um notebook ou se o computador tiver apenas uma placa de rede wi-fi, o dispositivo vai ser sempre `wlan0` então dá até pra pular essa parte
+```
+device list
+```
+  
+Pra buscar as redes disponíveis
+> Se souber o nome exato da rede wi-fi pra digitar também pode pular essa parte
+```
+station wlan0 scan
+```
+</details>
+
+
+
+
+## 1.5 Definir o idioma para pt_BR
 Digitar:
 ```
 nano /etc/locale.gen
 ```
-E descomentar (apagar o `#` da frente) na linha escrito `pt_BR.UTF-8 UTF-8`
+E descomentar (apagar o `#` da frente) na linha escrito `pt_BR.UTF-8 UTF-8` e 
 
 
 
