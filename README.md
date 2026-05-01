@@ -53,6 +53,7 @@ Feito isso, já pode ligar pressionando `DEL`, `ESC`, `F2`, `F4`, `F10`, `F12` o
 
 Depois que iniciar ele vai mostrar "Welcome to Arch-Linux" e depois subir uma pá de letras. Quando parar, vai ter um trecho assim:  
 `root@archiso~#`  
+
 Daqui em diante é escrever comandos, imagino como se fosse uma conversa com um bot de atendimento do delivery de comida e estou apenas digitando as opções do pedido.  
 
 ## 1.3 Definir o layout e fonte do teclado do console
@@ -60,7 +61,26 @@ Se não escolher o correto algumas teclas ficam digitando errado e vai atrapalha
 ``` 
 # localectl list-keymaps
 ```
-No brasil se usa o ABNT (teclados que não tem a tecla `AltGr` no lado direito da barra de espaço tem no máximo dois caracteres na mesma tecla) ou ABNT2
+No Brasil se usa dois tipos de teclado ABNT, tem que escolher o certo. Caso seja um Mac a posição das teclas é diferente, mas o princípio é o mesmo. Também é possível remapear as teclas depois de finalizar a instalação e deixar identico aos outros computadores normais.
+
+ABNT (teclados que **não tem** a tecla `AltGr` à direita da barra de espaço e tem no máximo dois caracteres na mesma tecla) 
+```
+# loadkeys br-abnt   
+```
+ABNT2 (teclados que **tem** a tecla `AltGr` à direita da barra de espaço e tem três caracteres na mesma tecla, por exemplo `+ = §`).
+```
+# loadkeys br-abnt2   
+```
+## 1.4 Definir o idioma
+Digitar:
+```
+nano /etc/locale.gen
+```
+E descomentar (apagar o `#` da frente) na linha escrito `pt_BR.UTF-8 UTF-8`
+
+
+
+
 
 
 
