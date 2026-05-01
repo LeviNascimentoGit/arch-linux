@@ -76,14 +76,17 @@ Pra saber se vai dar certo nesse computador tem que digitar
 ```
 cat /sys/firmware/efi/fw_platform_size
 ```
-- Se o comando retornar 64, o sistema será inicializado no modo UEFI e terá um UEFI x64 de 64 bits.
+>- Se o comando retornar 64, o sistema será inicializado no modo UEFI e terá um UEFI x64 de 64 bits.
 >- Se o comando retornar 32, o sistema será inicializado no modo UEFI e terá um UEFI IA32 de 32 bits. Embora isso seja suportado, limitará a escolha do carregador de inicialização àqueles que suportam inicialização em modo misto.
 >- Se não retornar tal arquivo ou diretório, o sistema poderá ser inicializado no modo BIOS (ou CSM).
 >Se o sistema não inicializou no modo desejado (UEFI ou BIOS), provavelmente a configuração da BIOS tá errada.
 
-
-## 1.4 Conectar na internet
-Se for uma conexão LAN pelo cabo de rede, então já deve estar funcionando, pra testar é só dar um comando de ping
+## 1.5 Conectar na internet
+Se for uma conexão LAN pelo cabo de rede, é só confirmar se está habilitado
+```
+ip link
+```
+Se estiver `Enable` então já deve estar funcionando, pra testar é só dar um comando de ping.
 ```
 ping google.com
 ```
@@ -108,23 +111,47 @@ station nome_do_dispositivo scan
 </details>
 
 Selecionar o dispositivo de Wi-fi e conectar na rede  
-
 ```
 station nome_do_dispositivo connect nome_da_rede
 ```
 Aqui ele vai pedir a `passphrase` que é a senha, é só digitar. Se em até 10 segundos não mostrar uma mensagem de erro. É porque funcionou!
-Dá pra testar usando o comando de ping.
 
-## 1.5 Definir o idioma para pt_BR
-Digitar:
+> Dá pra testar usando o comando de ping.
+
+## 1.6 Definir o idioma para pt_BR
+Abrir o arquivo modelo de configuração com o editor de texto via terminal
 ```
 nano /etc/locale.gen
 ```
-E descomentar (apagar o `#` da frente) na linha escrito `pt_BR.UTF-8 UTF-8` e 
+Descer com a seta e descomentar (apagar o `#` da frente) na linha escrito `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`. 
+Salvar com `CTRL`+`X` e `ENTER`
 
+## 1.7 Particionar o disco antes de formatar
+Na instalação do sistema ele interpreta as unidades de disco como /dev/... (Sd pra SSD, nvme0n pra NVME, ...)  
+Pra saber qual é o dispositivo tem que usar o comando pra listar todas as unidades e descobrir pelo tipo ou pelo tamanho, o ideal é deixar conectado só o disco que vai ser formatado e a mídia de instalação.
+```
+fdisk -l
+```
+Pra facilitar nos exemplos, vou considerar que seja um SSD
+```
+fdisk /dev/sda
+```
+Usar o comando `d` pra ir apagando as partições que já existam no disco
 
+Daqui pra frente é assim: 
+- O comando `n` cria uma nova partição
+- O terminal pergunta um número pra identificar a partição [1,2, ...]
+- Vai ser sugerido um setor inicial, é só pressionar `Enter`
+- Vai perguntar o setor final, tem que colocar quanto vai ser somado no tamanho da partição [+quantidade_medida]
+- digitar `t` pra definir o tipo de partição e informar pro sistema pra que ela vai ser usada depois
 
+### Modelo pra partição sda1
+Partição 1 , +500mb, UEFI
+### Modelo pra sda2
+partição 2 , +espaço restante do disco, btrfs
 
+## 1.8 Formatar o disco
+mkfs.fat -F32 sda1
 
 
 
