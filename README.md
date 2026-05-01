@@ -1,8 +1,8 @@
-# Manual de instalação do arch-linux + Gnome puro + systemd-boot
+# Manual de instalação UEFI do arch-linux + Gnome puro + systemd-boot [PT_BR]
 Testei diversas distros Linux, especialmente as mais populares (Arch, Mint, Fedora, Ubuntu e Debian), e cheguei à conclusão que essa combinação foi a melhor para o meu uso cotidiano com melhor suporte ativo da comunidade, boa compatibilidade com pacotes de aplicativos e com maior liberdade de personalização, basicamente tudo que serve pra outras distros, serve aqui também e algumas vezes até mais fácil ainda de ser feito. E acima de tudo, que contenha apenas o obrigatório para o sistema funcionar, mas sempre deixando a possibilidade de instalar qualquer coisa que eu precisar futuramente.
 
 ## Por quê o Arch-Linux?
-Ele é baseado no Debian que é uma das primeiras distros baseadas em Linux, a qual eu percebi que tem uma variedade de pacotes e de suporte muito grande comparado com outras distros.
+Ele é baseado no Debian que é uma das primeiras distros baseadas em Linux, a qual eu percebi que tem uma variedade de pacotes e de suporte muito grande comparado com outras distros. E possui uma comunidade ativa que te ensina a fazer qualquer tipo de coisa nele, além da [ArchWiki](https://wiki.archlinux.org/) que parece uma Bíblia de tão completa e sempre atualizada. 
 
 - Por quê não instalar o Debian então?
 
@@ -38,6 +38,21 @@ A maioria dos tutoriais que eu vi, falam de instalar o Grub como Bootloader, mas
 
 ### Dito tudo isso... Segue o manual de instalação abaixo.
 
+# Instalando o Arch-Linux
+O processo pode ser feito seguindo o (Manual da ArchWiki)[https://wiki.archlinux.org/title/Installation_guide]. Mas recomendo seguir este método de instalação para deixar ele já configurado para o portugês e evitar várias etapas da pós instalação. 
+
+# 1 Pré-instalação
+# 1.1 Baixar uma imagem de instalação
+Faça o [Download do Arch-Linux](https://archlinux.org/download/) via Magnet Link ou Torrent.
+
+## 1.2 Preparar a mídia de instalação (Pendrive ou HD)
+Pode usar o [Rufus](https://rufus.ie), [Ventoy](https://www.ventoy.net/en/download.html), [Balena Etcher](https://etcher.balena.io/#download-etcher) ou o [Easy2Boot](https://easy2boot.xyz/download/) (uso esse). Caso você seja o Mr. Robot na vida, use um desses [outros métodos](https://wiki.archlinux.org/title/USB_flash_installation_medium). 
+
+Feito isso, já pode ligar pressionando DEL, ESC, F2, F4, F10, F12 ou alguma outra tecla, depende do seu equipamento. O importante é iniciar pelo USB no computador que vai ser instalado.
+
+## 1.3 Definir o layout e fonte do teclado do console
+Depois que iniciar ele vai mostrar "Welcome to Arch-Linux" e depois subir uma pá de letras. Quando parar vai ter um trecho assim:
+root@archiso~#
 
 
 
@@ -55,6 +70,7 @@ A maioria dos tutoriais que eu vi, falam de instalar o Grub como Bootloader, mas
 
 
 
+## Etapas opcionais
 
 
 
