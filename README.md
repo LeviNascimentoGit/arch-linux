@@ -42,7 +42,7 @@ A maioria dos tutoriais que eu vi, falam de instalar o Grub como Bootloader, mas
 </details>
 
 # Instalando o Arch-Linux
-O processo pode ser feito seguindo o (Manual da ArchWiki)[https://wiki.archlinux.org/title/Installation_guide]. Mas recomendo seguir este método de instalação para deixar ele já configurado para o portugês e evitar várias etapas da pós instalação. 
+O processo pode ser feito seguindo o (Manual da ArchWiki)[https://wiki.archlinux.org/title/Installation_guide]. Mas recomendo seguir este método de instalação para deixar ele já configurado e evitar várias etapas da pós instalação. 
 
 # 1 Pré-instalação
 ## 1.1 Baixar uma imagem de instalação
@@ -87,6 +87,8 @@ cat /sys/firmware/efi/fw_platform_size
 </details>
 
 ## 1.5 Conectar na internet
+É obrigatório ter internet pra instalar o Arch-linux, porque ele só carrega o básico do terminal Kernel na imagem de instalação, todos os aplicativos e interface gráfica é baixado de acordo com a escolha do usuário.  
+- Conexão Ethernet, via cabo  
 Se for uma conexão LAN pelo cabo de rede, é só confirmar se está habilitado
 ```
 ip link
@@ -95,35 +97,43 @@ Se estiver `Enable` então já deve estar funcionando, pra testar é só dar um 
 ```
 ping google.com
 ```
+- Conexão Wireless, via Wi-Fi  
 Se for uma conexão via Wi-Fi, então use o comando pra entrar no menu de configuração de wi-fi
 ```
 iwctl
 ```
 <details>
   
-Depois o comando pra listar as placas de rede e saber o nome do dispositivo pra usar na próxima etapa
-> Se for um notebook ou se o computador tiver apenas uma placa de rede wi-fi, o dispositivo vai ser sempre `wlan0` então dá até pra pular essa parte
+Esse é o comando pra listar as placas de rede e saber o nome do dispositivo pra usar na próxima etapa
+> Se for um notebook ou se o computador tiver apenas uma placa de rede wi-fi, o dispositivo vai ser sempre `wlan0` então dá até pra pular essa parte.
 
 ```
 device list
 ```
   
 Pra buscar as redes disponíveis
-> Se souber o nome exato da rede wi-fi pra digitar (maiúsculas e minúsculas), também pode pular essa parte
+> Se souber o nome exato da rede wi-fi pra digitar (maiúsculas e minúsculas), também pode pular essa parte.
 ```
-station nome_do_dispositivo scan
+station wlan0 scan
 ```
 </details>
 
 Selecionar o dispositivo de Wi-fi e conectar na rede  
 ```
-station nome_do_dispositivo connect nome_da_rede
+station wlan0 connect Meu_wifi_5G
 ```
 Aqui ele vai pedir a `passphrase` que é a senha, é só digitar. Se em até 10 segundos não mostrar uma mensagem de erro. É porque funcionou!
 
 > Dá pra testar usando o comando de ping.
 
-## 1.6 Definir o idioma para pt_BR
+## 1.6 Definir Hora e Data pela rede
+Essa etapa é opcional, nunca tive problemas, mas é melhor fazer ela só pra evitar problemas relacionado a baixar pacotes por causa da diferença na data e hora do sistema comparado aos servidores.
+
+```
+timedatectl set-ntp true
+```
+
+## 1.7 Definir o idioma para pt_BR
 Abrir o arquivo modelo de configuração com o editor de texto via terminal
 ```
 nano /etc/locale.gen
