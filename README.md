@@ -1,4 +1,5 @@
-<details>
+<details>  
+
 # Manual de instalação UEFI do arch-linux + Gnome puro + systemd-boot [PT_BR]
 Testei diversas distros Linux, especialmente as mais populares (Arch, Mint, Fedora, Ubuntu e Debian), e cheguei à conclusão que essa combinação foi a melhor para o meu uso cotidiano com melhor suporte ativo da comunidade, boa compatibilidade com pacotes de aplicativos e com maior liberdade de personalização, basicamente tudo que serve pra outras distros, serve aqui também e algumas vezes até mais fácil ainda de ser feito. E acima de tudo, que contenha apenas o obrigatório para o sistema funcionar, mas sempre deixando a possibilidade de instalar qualquer coisa que eu precisar futuramente.
 
@@ -39,6 +40,7 @@ A maioria dos tutoriais que eu vi, falam de instalar o Grub como Bootloader, mas
 
 ### Dito tudo isso... Segue o manual de instalação abaixo.
 </details>
+
 # Instalando o Arch-Linux
 O processo pode ser feito seguindo o (Manual da ArchWiki)[https://wiki.archlinux.org/title/Installation_guide]. Mas recomendo seguir este método de instalação para deixar ele já configurado para o portugês e evitar várias etapas da pós instalação. 
 
@@ -71,7 +73,8 @@ ABNT2 (teclados que **tem** a tecla `AltGr` à direita da barra de espaço e tem
 ```
 loadkeys br-abnt2   
 ```
-<details>
+<details>  
+
 ## 1.4 Verificar o modo de boot  
 Pra saber se vai dar certo nesse computador tem que digitar
 ```
@@ -82,6 +85,7 @@ cat /sys/firmware/efi/fw_platform_size
 >- Se não retornar tal arquivo ou diretório, o sistema poderá ser inicializado no modo BIOS (ou CSM).
 >Se o sistema não inicializou no modo desejado (UEFI ou BIOS), provavelmente a configuração da BIOS tá errada.
 </details>
+
 ## 1.5 Conectar na internet
 Se for uma conexão LAN pelo cabo de rede, é só confirmar se está habilitado
 ```
