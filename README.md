@@ -59,10 +59,7 @@ Depois que iniciar ele vai mostrar "Welcome to Arch-Linux" e depois subir uma p�
 Daqui em diante é escrever comandos, imaginar como se fosse uma conversa com um bot de atendimento do delivery de comida e estou apenas digitando as opções do pedido.  
 
 ## 1.3 Definir o layout e fonte do teclado do console
-Se não escolher o correto algumas teclas ficam digitando errado e vai atrapalhar. Esse comando mostra a lista de todos os layouts de teclado.
-``` 
-localectl list-keymaps
-```
+
 No Brasil se usa dois tipos de teclado ABNT, tem que escolher o certo. Caso seja um Mac a posição das teclas é diferente, mas o princípio é o mesmo. Também é possível remapear as teclas depois de finalizar a instalação e deixar identico aos outros computadores normais.
 
 ABNT (teclados que **não tem** a tecla `AltGr` à direita da barra de espaço e tem no máximo dois caracteres na mesma tecla) 
@@ -73,6 +70,10 @@ ABNT2 (teclados que **tem** a tecla `AltGr` à direita da barra de espaço e tem
 ```
 loadkeys br-abnt2   
 ```
+Se não escolher o correto algumas teclas ficam digitando errado e vai atrapalhar. Esse comando mostra a lista de todos os layouts de teclado.
+``` 
+localectl list-keymaps
+```
 <details>  
 
 ## 1.4 Verificar o modo de boot  
@@ -80,14 +81,13 @@ Pra saber se vai dar certo nesse computador tem que digitar
 ```
 cat /sys/firmware/efi/fw_platform_size
 ```
->- Se o comando retornar 64, o sistema será inicializado no modo UEFI e terá um UEFI x64 de 64 bits.
->- Se o comando retornar 32, o sistema será inicializado no modo UEFI e terá um UEFI IA32 de 32 bits. Embora isso seja suportado, limitará a escolha do carregador de inicialização àqueles que suportam inicialização em modo misto.
->- Se não retornar tal arquivo ou diretório, o sistema poderá ser inicializado no modo BIOS (ou CSM).
->Se o sistema não inicializou no modo desejado (UEFI ou BIOS), provavelmente a configuração da BIOS tá errada.
+>- Se o comando retornar `64` ou `32`, o sistema será inicializado no modo UEFI e terá um UEFI x64 de 64 bits, ou UEFI IA32 de 32 bits.
+>- Se o sistema não inicializou no modo UEFI, provavelmente a configuração da BIOS tá errada e ele iniciou no modo BIOS.
+>- Se retornar `No such file or directory`, o sistema poderá ser inicializado no modo BIOS (ou CSM). Então esse manual não serve, use o Manual pra GRUB.
 </details>
 
 ## 1.5 Conectar na internet
-É obrigatório ter internet pra instalar o Arch-linux, porque ele só carrega o básico do terminal Kernel na imagem de instalação, todos os aplicativos e interface gráfica é baixado de acordo com a escolha do usuário.  
+É obrigatório ter internet pra instalar o Arch-linux, porque ele só contém o básico do terminal Kernel na imagem de instalação, todos os aplicativos e interface gráfica é baixado de acordo com a escolha do usuário.  
 - Conexão Ethernet, via cabo  
 Se for uma conexão LAN pelo cabo de rede, é só confirmar se está habilitado
 ```
@@ -105,22 +105,23 @@ iwctl
 <details>
   
 Esse é o comando pra listar as placas de rede e saber o nome do dispositivo pra usar na próxima etapa
-> Se for um notebook ou se o computador tiver apenas uma placa de rede wi-fi, o dispositivo vai ser sempre `wlan0` então dá até pra pular essa parte.
-
+> Se for um notebook com Wi-Fi integrado ou se o computador tiver apenas uma placa de rede Wi-Fi, o nome do dispositivo vai ser `wlan0`, então dá até pra pular essa parte.
 ```
 device list
 ```
-  
+> (Vou considerar que o nome do dispositivo seja `wlan0`, porque é esse na maioria dos casos)
+
 Pra buscar as redes disponíveis
-> Se souber o nome exato da rede wi-fi pra digitar (maiúsculas e minúsculas), também pode pular essa parte.
+> Se souber o nome exato da rede Wi-Fi (incluindo maiúsculas/minúsculas e pontuações), também pode pular essa parte.
 ```
 station wlan0 scan
 ```
 </details>
 
-Selecionar o dispositivo de Wi-fi e conectar na rede  
+Selecionar o dispositivo de Wi-Fi e conectar na rede  
+> No meu caso eu conectei na que estava disponível aqui, tem que ser o nome exato incluindo espaços e até quando tem `2.4` ou `_5G` no final.
 ```
-station wlan0 connect Meu_wifi_5G
+station wlan0 connect Internet do vizinho_5G
 ```
 Aqui ele vai pedir a `passphrase` que é a senha, é só digitar. Se em até 10 segundos não mostrar uma mensagem de erro. É porque funcionou!
 
