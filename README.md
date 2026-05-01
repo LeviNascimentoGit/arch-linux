@@ -54,7 +54,7 @@ Feito isso, já pode ligar pressionando `DEL`, `ESC`, `F2`, `F4`, `F10`, `F12` o
 Depois que iniciar ele vai mostrar "Welcome to Arch-Linux" e depois subir uma pá de letras. Quando parar, vai ter um trecho assim:  
 `root@archiso~#`  
 
-Daqui em diante é escrever comandos, imagino como se fosse uma conversa com um bot de atendimento do delivery de comida e estou apenas digitando as opções do pedido.  
+Daqui em diante é escrever comandos, imaginar como se fosse uma conversa com um bot de atendimento do delivery de comida e estou apenas digitando as opções do pedido.  
 
 ## 1.3 Definir o layout e fonte do teclado do console
 Se não escolher o correto algumas teclas ficam digitando errado e vai atrapalhar. Esse comando mostra a lista de todos os layouts de teclado.
@@ -71,6 +71,17 @@ ABNT2 (teclados que **tem** a tecla `AltGr` à direita da barra de espaço e tem
 ```
 loadkeys br-abnt2   
 ```
+## 1.4 Verificar o modo de boot  
+Pra saber se vai dar certo nesse computador tem que digitar
+```
+cat /sys/firmware/efi/fw_platform_size
+```
+- Se o comando retornar 64, o sistema será inicializado no modo UEFI e terá um UEFI x64 de 64 bits.
+>- Se o comando retornar 32, o sistema será inicializado no modo UEFI e terá um UEFI IA32 de 32 bits. Embora isso seja suportado, limitará a escolha do carregador de inicialização àqueles que suportam inicialização em modo misto.
+>- Se não retornar tal arquivo ou diretório, o sistema poderá ser inicializado no modo BIOS (ou CSM).
+>Se o sistema não inicializou no modo desejado (UEFI ou BIOS), provavelmente a configuração da BIOS tá errada.
+
+
 ## 1.4 Conectar na internet
 Se for uma conexão LAN pelo cabo de rede, então já deve estar funcionando, pra testar é só dar um comando de ping
 ```
@@ -81,21 +92,28 @@ Se for uma conexão via Wi-Fi, então use o comando pra entrar no menu de config
 iwctl
 ```
 <details>
-  Depois o comando pra listar as placas de rede e saber o nome do dispositivo pra usar na próxima etapa
+  
+Depois o comando pra listar as placas de rede e saber o nome do dispositivo pra usar na próxima etapa
 > Se for um notebook ou se o computador tiver apenas uma placa de rede wi-fi, o dispositivo vai ser sempre `wlan0` então dá até pra pular essa parte
+
 ```
 device list
 ```
   
 Pra buscar as redes disponíveis
-> Se souber o nome exato da rede wi-fi pra digitar também pode pular essa parte
+> Se souber o nome exato da rede wi-fi pra digitar (maiúsculas e minúsculas), também pode pular essa parte
 ```
-station wlan0 scan
+station nome_do_dispositivo scan
 ```
 </details>
 
+Selecionar o dispositivo de Wi-fi e conectar na rede  
 
-
+```
+station nome_do_dispositivo connect nome_da_rede
+```
+Aqui ele vai pedir a `passphrase` que é a senha, é só digitar. Se em até 10 segundos não mostrar uma mensagem de erro. É porque funcionou!
+Dá pra testar usando o comando de ping.
 
 ## 1.5 Definir o idioma para pt_BR
 Digitar:
