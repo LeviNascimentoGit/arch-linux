@@ -71,6 +71,7 @@ ABNT2 (teclados que **tem** a tecla `AltGr` à direita da barra de espaço e tem
 ```
 loadkeys br-abnt2   
 ```
+<details>
 ## 1.4 Verificar o modo de boot  
 Pra saber se vai dar certo nesse computador tem que digitar
 ```
@@ -80,7 +81,7 @@ cat /sys/firmware/efi/fw_platform_size
 >- Se o comando retornar 32, o sistema será inicializado no modo UEFI e terá um UEFI IA32 de 32 bits. Embora isso seja suportado, limitará a escolha do carregador de inicialização àqueles que suportam inicialização em modo misto.
 >- Se não retornar tal arquivo ou diretório, o sistema poderá ser inicializado no modo BIOS (ou CSM).
 >Se o sistema não inicializou no modo desejado (UEFI ou BIOS), provavelmente a configuração da BIOS tá errada.
-
+</details>
 ## 1.5 Conectar na internet
 Se for uma conexão LAN pelo cabo de rede, é só confirmar se está habilitado
 ```
