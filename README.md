@@ -43,7 +43,7 @@ A maioria dos tutoriais que eu vi, falam de instalar o Grub como Bootloader, mas
 O processo pode ser feito seguindo o (Manual da ArchWiki)[https://wiki.archlinux.org/title/Installation_guide]. Mas recomendo seguir este método de instalação para deixar ele já configurado para o portugês e evitar várias etapas da pós instalação. 
 
 # 1 Pré-instalação
-# 1.1 Baixar uma imagem de instalação
+## 1.1 Baixar uma imagem de instalação
 Faça o [Download do Arch-Linux](https://archlinux.org/download/) via Magnet Link ou Torrent.
 
 ## 1.2 Preparar a mídia de instalação (Pendrive ou HD)
@@ -126,7 +126,19 @@ nano /etc/locale.gen
 Descer com a seta e descomentar (apagar o `#` da frente) na linha escrito `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`. 
 Salvar com `CTRL`+`X` e `ENTER`
 
-## 1.7 Particionar o disco antes de formatar
+Gerar o arquivo de idioma
+```
+locale-gen
+```
+
+# 2 Particionar, formatar e montar as partições
+Só pra esclarecer como funciona essa etapa. Primeiro tem que criar a partição, que é avisar pro sistema quanto espaço do disco pode ser usado pra cada partição criada, já que o disco tem escrita dinâmica então ele tá sempre gravando em setores diferentes mas sempre mantem a proporção de espaço pra cada partição. E também avisar pro sistema que tipo de partição é cada uma, principalmente pra ele saber onde fica o EFI do Boot. 
+
+Depois tem que formatar as partições pra definir o formato de arquivo, nesse caso vai ser só dois: Fat32 e Btrfs.
+
+Por último tem que montar os diretórios de pasta, dentro das partições, pra poder gravar cada coisa no lugar certo durante a instalação.
+
+## 2.1 Particionar o disco antes de formatar
 Na instalação do sistema ele interpreta as unidades de disco como /dev/... (Sd pra SSD, nvme0n pra NVME, ...)  
 Pra saber qual é o dispositivo tem que usar o comando pra listar todas as unidades e descobrir pelo tipo ou pelo tamanho, o ideal é deixar conectado só o disco que vai ser formatado e a mídia de instalação.
 ```
@@ -140,18 +152,47 @@ Usar o comando `d` pra ir apagando as partições que já existam no disco
 
 Daqui pra frente é assim: 
 - O comando `n` cria uma nova partição
-- O terminal pergunta um número pra identificar a partição [1,2, ...]
+- O terminal pergunta um número pra identificar a partição. Ex: `1`
 - Vai ser sugerido um setor inicial, é só pressionar `Enter`
-- Vai perguntar o setor final, tem que colocar quanto vai ser somado no tamanho da partição [+quantidade_medida]
-- digitar `t` pra definir o tipo de partição e informar pro sistema pra que ela vai ser usada depois
+- Vai perguntar o setor final, tem que colocar quanto vai ser somado no tamanho da partição e a unidade de medida, tudo junto. Ex: `+1g`
+- digitar `t` pra definir o tipo de partição e informar pro sistema pra que ela vai ser usada depois. Ex: `uefi`
 
-### Modelo pra partição sda1
-Partição 1 , +500mb, UEFI
-### Modelo pra sda2
-partição 2 , +espaço restante do disco, btrfs
+### Modelo pra partição /dev/sda1 (boot, só serve pra iniciar o sistema)
+> 1 , +1g, UEFI
+### Modelo pra pratição /dev/sda2 (root, onde fica os arquivos de sistema e de usuário)
+> 2 , +espaço restante do disco, btrfs
 
-## 1.8 Formatar o disco
-mkfs.fat -F32 sda1
+Salvar usando `w` e `Enter`
+
+## 2.2 Formatar o disco
+
+Partição boot
+```
+mkfs.fat -F32 /dev/sda1 
+```
+
+Partição root
+```
+mkfs.btrfs /dev/sda2
+```
+
+## 2.3 Criar os pontos de montagem
+
+Pra montar o root tem que usar o comando
+```
+mount /dev/sda2 /mnt
+```
+
+Pra montar o boot tem que usar o comando
+```
+mount --mkdir /dev/sda1 /mnt/boot
+```
+
+# 3 Instalação, finalmente!
+Tem que começar instalando os pacotes básicos
+```
+ pacstrap /mnt base linux linux-firmware
+```
 
 
 
@@ -167,7 +208,26 @@ mkfs.fat -F32 sda1
 
 
 
-## Etapas opcionais
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
