@@ -143,19 +143,25 @@ Só pra esclarecer como funciona isso.
 </details>
 
 ## 2.1 Particionar o disco antes de formatar
-Pra saber qual é o dispositivo, tem que usar o comando pra listar todas as unidades e descobrir pelo tipo ou pelo tamanho, o ideal é deixar conectado só o disco que vai ser formatado e a mídia de instalação, pra não fazer besteira.
+Pra saber qual é o dispositivo, tem que usar o comando pra listar todas as unidades e descobrir pelo tipo ou pelo tamanho, o ideal é deixar conectado só o disco que vai ser formatado e a mídia de instalação, pra não apagar o disco errado por engano.
 ```
 fdisk -l
 ```
-> Na instalação do sistema, ele entende as unidades de disco como caminhos `/dev/ ...`  e usa abreviações como `sda` pra disco Sata, `nvme0n1` pra NVME e `vda` pra disco virtual. Ex: `/dev/sda`
-Nomes de disco com `rom`, `loop` or `airootfs`. ou cartões de memória removíveis com `rpmb`, `boot0` and `boot1` podem ser ignorados.  
+<details>
 
-Pra facilitar nos exemplos, vou considerar que seja um disco Sata
+> Na instalação do sistema, ele entende as unidades de disco como caminhos `/dev/ ...`  e usa abreviações como `sda` pra disco Sata, `nvme0n1` pra NVME e `vda` pra disco virtual. Ex: `/dev/sda`  
+> Quando tem mais de um disco do mesmo tipo, eles ficam com as abreviações diferentes em sequência alfabética ou numérica:  
+> `sda`, `sdb`, `sdc` ...  `nvme0n1`, `nvme0n2`, `nvme0n3` ... `vda`, `vdb`, `vdc`  
+> Nomes de disco com `rom`, `loop` or `airootfs`. ou cartões de memória removíveis com `rpmb`, `boot0` and `boot1` podem ser ignorados.
+</details>
+
+Nos exemplos vou considerar que seja pra particionar o primeiro disco Sata.
 ```
 fdisk /dev/sda
 ```
-Usar o comando `d` pra ir apagando as partições que já existam no disco. E usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.
+Usar o comando `d` e `Enter` pra ir apagando as partições que já existam no disco até retornar `No partition is defined yet!`. 
 
+usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.
 
 Daqui pra frente é assim: 
 - O comando `n` cria uma nova partição
