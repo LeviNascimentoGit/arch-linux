@@ -154,7 +154,7 @@ Só pra esclarecer como funciona isso.
 
 Pra saber qual é o dispositivo, tem que usar o comando pra listar todas as unidades e descobrir pelo tipo ou pelo tamanho, o ideal é deixar conectado só o disco que vai ser formatado e a mídia de instalação, pra não apagar o disco errado por engano.
 ```
-fdisk -l
+lsblk
 ```
 <details>
 
@@ -199,9 +199,12 @@ Pra ver se ficou tudo certo é só usar o comando
 ```
 lsblk
 ```
-<img width="720" height="113" alt="image" src="https://github.com/user-attachments/assets/640e71cd-5a77-4083-95de-c499aaabb580" />
+<img width="720" height="113" alt="image" src="https://github.com/user-attachments/assets/640e71cd-5a77-4083-95de-c499aaabb580" />  
+
 > Aqui ficou como 1gb na partição boot, e 19gb na partição root
+
 ## 2.2 Formatar o disco
+É só definir qual é o formato do sistema de arquivo de cada partição
 
 - Partição boot
 ```
@@ -214,13 +217,14 @@ mkfs.btrfs /dev/sda2
 ```
 
 ## 2.3 Criar os pontos de montagem
+Apontar pro sistema em qual diretório de pasta vai ficar o Boot e onde é o Root
 
-Pra montar o root tem que usar o comando
+- Pra montar o root tem que usar o comando
 ```
 mount /dev/sda2 /mnt
 ```
 
-Pra montar o boot tem que usar o comando
+- Pra montar o boot tem que usar o comando
 ```
 mount --mkdir /dev/sda1 /mnt/boot
 ```
