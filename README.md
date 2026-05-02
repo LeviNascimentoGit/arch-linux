@@ -219,7 +219,18 @@ mkfs.fat -F32 /dev/sda1
 ```
 mkfs.btrfs /dev/sda2
 ```
+<details> 
+
+- Usar o comando abaixo pra ver se o formato do sistema de arquivo ficou certo em cada partição
+```
+lsblk -f
+```
+
 <img width="980" height="112" alt="image" src="https://github.com/user-attachments/assets/2acf2a0d-b074-4b4d-ab5f-ebc2bf2a9dcd" />
+
+> Partição sda1: EFI, vFAT (FAT32)
+> Partição sda2: btrfs
+</details>
 
 ## 2.3 Criar os pontos de montagem
 Apontar pro sistema em qual diretório de pasta vai ficar o Boot e onde é o Root
@@ -241,7 +252,7 @@ mount --mkdir /dev/sda1 /mnt/boot
 lsblk -f
 ```
 
-<img width="720" height="113" alt="image" src="https://github.com/user-attachments/assets/640e71cd-5a77-4083-95de-c499aaabb580" />  
+<img width="951" height="114" alt="image" src="https://github.com/user-attachments/assets/24d1264c-1fa5-4390-af72-df36844ea1eb" />
 
 > Partição sda1: EFI, vFAT (FAT32), /mnt/Boot
 > Partição sda2: btrfs, /mnt
