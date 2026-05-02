@@ -279,7 +279,49 @@ cat /mnt/etc/fstab
 <details> 
 
 ## 3.3 Criando uma partição de swap <sup>(Opcional)</sup> 
-O Linux
+O Linux pode simular uma extensão de memória RAM usando uma parte do disco de armazenamento, igual os dispositivos da Xiaomi. Pra ativar é preciso criar uma `partição swap`.  
+
+- Começar entrando no modo de gerenciamento root do disco
+```
+arch-chroot /mnt
+```
+- Depois alocar, separando uma parte do armazenamento e criando um diretório
+```
+fallocate -l 4GB /swapfile
+```
+- Dar as permissões necessárias para o diretório criado
+```
+chmod 600 /swapfile
+```
+- Definir o diretório pro formato swap
+```
+mkswap /swapfile
+```
+- Ativar o diretório para o Swap
+```
+swapon /swapfile
+```
+- Adicionar o diretório na lista de partições
+```
+nano /mnt/etc/fstab
+```
+Usar a seta pra ir até a ultima linha em branco e digitar 
+
+```
+/swapfile none swap default 0 0 
+```
+```
+fallocate -l 4GB /swapfile
+```
+```
+fallocate -l 4GB /swapfile
+```
+```
+fallocate -l 4GB /swapfile
+```
+```
+fallocate -l 4GB /swapfile
+```
 
 </details>
 
