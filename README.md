@@ -308,23 +308,24 @@ nano /mnt/etc/fstab
 Usar a seta pra ir até a ultima linha em branco e digitar 
 
 ```
-/swapfile none swap default 0 0 
+/swapfile none swap defaults 0 0 
 ```
-```
-fallocate -l 4GB /swapfile
-```
-```
-fallocate -l 4GB /swapfile
-```
-```
-fallocate -l 4GB /swapfile
-```
-```
-fallocate -l 4GB /swapfile
-```
-
+Usar `CTRL`+`O` pra salvar e `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 </details>
 
+3.4 Criar 
+```
+fallocate -l 4GB /swapfile
+```
+```
+fallocate -l 4GB /swapfile
+```
+```
+fallocate -l 4GB /swapfile
+```
+```
+fallocate -l 4GB /swapfile
+```
 
 
 
@@ -355,7 +356,8 @@ Abrir o arquivo modelo de configuração com o editor de texto via terminal
 nano /etc/locale.gen
 ```
 Descer com a seta e descomentar (apagar o `#` da frente) na linha escrito `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`. 
-Salvar com `CTRL`+`X` e `ENTER`
+
+Usar `CTRL`+`O` pra salvar e `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 
 Gerar o arquivo de idioma
 ```
