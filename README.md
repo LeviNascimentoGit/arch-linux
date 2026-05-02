@@ -159,20 +159,21 @@ Nos exemplos vou considerar que seja pra particionar o primeiro disco Sata.
 ```
 fdisk /dev/sda
 ```
-Usar o comando `d` e `Enter` pra ir apagando as partições que já existam no disco até retornar `No partition is defined yet!`. 
+Quando abrir o menu de partição é só usar o comando `d` e `Enter` pra ir apagando as partições que já existam no disco até retornar `No partition is defined yet!`.  
 
 usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.
 
-Daqui pra frente é assim: 
-- O comando `n` cria uma nova partição
-- O terminal pergunta um número pra identificar a partição. Ex: `1`
-- Vai ser sugerido um setor inicial, é só pressionar `Enter`
-- Vai perguntar o setor final, tem que colocar quanto vai ser somado no tamanho da partição e a unidade de medida, tudo junto. Ex: `+1g`
-- digitar `t` pra definir o tipo de partição e informar pro sistema pra que ela vai ser usada depois. Ex: `uefi`
+### Criar a partição /dev/sda1 (Boot, só serve pra iniciar o sistema)
+> Sda1, 1Gb, UEFI
 
-### Modelo pra partição /dev/sda1 (boot, só serve pra iniciar o sistema)
-> 1 , +1g, UEFI
-### Modelo pra pratição /dev/sda2 (root, onde fica os arquivos de sistema e de usuário)
+- Comando `n` pra criar uma nova partição
+- Escolher um número pra identificar a partição: `1`
+- Vai ser sugerido um setor inicial, é só pressionar `Enter`
+- Vai perguntar o setor final, tem que colocar quanto vai ser somado no tamanho da partição e a unidade de medida, tudo junto: `+1g`
+- digitar `t` pra definir o tipo de partição, pro sistema saber pra que ela vai ser usada depois: `uefi`
+
+
+### Modelo pra pratição /dev/sda2 (Root, onde fica os arquivos do sistema e do usuário)
 > 2 , +espaço restante do disco, btrfs
 
 Salvar usando `w` e `Enter`
