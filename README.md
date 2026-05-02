@@ -145,7 +145,7 @@ timedatectl set-ntp true
 # 2 Particionar, formatar e montar as partições
 
 Só pra esclarecer como funciona isso.  
-- Primeiro tem que criar a partição, que é avisar pro sistema quanto espaço do disco pode ser usado pra cada partição criada, já que o disco tem escrita dinâmica então ele tá sempre gravando em setores diferentes mas sempre mantem a proporção de espaço pra cada partição. E também avisar pro sistema que tipo de partição é cada uma, principalmente pra ele saber onde fica o EFI do Boot.  
+- Primeiro tem que criar a partição, que é avisar pro sistema quanto espaço do disco pode ser usado pra cada partição criada, já que o disco tem escrita dinâmica então ele tá sempre gravando em setores diferentes mas sempre mantem a proporção de espaço pra cada partição. E também avisar pro sistema que tipo de partição é cada uma, pra ele saber onde provavelmente vai ficar o EFI do Boot.  
 - Depois tem que formatar as partições pra definir o formato de arquivo, nesse caso vai ser só dois: Fat32 e Btrfs.  
 - Por último tem que montar os diretórios de pasta, dentro das partições, pra poder gravar cada coisa no lugar certo durante a instalação.  
 </details>
@@ -259,13 +259,29 @@ lsblk -f
 </details>
 
 # 3 Instalação, finalmente!
+O Arch é igual um Lego, tem que ir montando cada parte dele durante a instalação
 
 ## 3.1 Instalar os pacotes básicos
+Esse comando baixa e salva no root: o pacote mínimo base pra instalação do sistema; um editor de texto via terminal; o kernel com módulos Linux; Firmware pra o funcionamento do hardware (drivers básicos). 
 ```
- pacstrap /mnt base linux linux-firmware nano
+ pacstrap /mnt base nano linux linux-firmware
 ```
 
+## 3.2 Gerar o a tabela de partições 
+Para o sistema salvar a lista das partições criadas é preciso gerar o arquivo `fstab` usando o comando:
+```
+genfstab -U /mnt >> /mnt/etc/fstab
+```
+> Percebi que algumas vezes o sistema não lista todas as partições, então é bom usar o comando abaixo, pra confirmar se já contém todas, ou vai ser preciso repetir o processo.
+```
+cat /mnt/etc/fstab
+```
+<details> 
 
+## 3.3 Criando uma partição de swap <sup>(Opcional)</sup> 
+O Linux
+
+</details>
 
 
 
