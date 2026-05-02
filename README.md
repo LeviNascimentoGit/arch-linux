@@ -193,16 +193,22 @@ Usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.
 - digitar `t` pra definir o tipo de partição, pro sistema saber pra que ela vai ser usada depois: `20`  
 > Pra ver o número da opção de cada tipo de partição é só usar o comando `l` e depois `q` pra voltar
 
-Salvar usando `w` e `Enter`
+Salvar usando `w` e `Enter`  
 
+Pra ver se ficou tudo certo é só usar o comando
+```
+lsblk
+```
+<img width="720" height="113" alt="image" src="https://github.com/user-attachments/assets/640e71cd-5a77-4083-95de-c499aaabb580" />
+> Aqui ficou como 1gb na partição boot, e 19gb na partição root
 ## 2.2 Formatar o disco
 
-Partição boot
+- Partição boot
 ```
 mkfs.fat -F32 /dev/sda1 
 ```
 
-Partição root
+- Partição root
 ```
 mkfs.btrfs /dev/sda2
 ```
