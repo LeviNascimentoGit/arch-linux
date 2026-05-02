@@ -195,16 +195,20 @@ Usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.
 
 Salvar usando `w` e `Enter`  
 
-Pra ver se ficou tudo certo é só usar o comando
+<details> 
+
+- Usar o comando abaixo pra ver se o tamanho e o tipo das partições ficou certo
 ```
 lsblk
 ```
-<img width="720" height="113" alt="image" src="https://github.com/user-attachments/assets/640e71cd-5a77-4083-95de-c499aaabb580" />  
+
+<img width="452" height="112" alt="image" src="https://github.com/user-attachments/assets/cf3b7796-16d7-40db-a80b-5ffec70eaff3" />
 
 > Aqui ficou como 1gb na partição boot, e 19gb na partição root
+</details>
 
 ## 2.2 Formatar o disco
-É só definir qual é o formato do sistema de arquivo de cada partição
+É só definir qual é o formato do sistema de arquivo em cada partição
 
 - Partição boot
 ```
@@ -215,6 +219,7 @@ mkfs.fat -F32 /dev/sda1
 ```
 mkfs.btrfs /dev/sda2
 ```
+<img width="980" height="112" alt="image" src="https://github.com/user-attachments/assets/2acf2a0d-b074-4b4d-ab5f-ebc2bf2a9dcd" />
 
 ## 2.3 Criar os pontos de montagem
 Apontar pro sistema em qual diretório de pasta vai ficar o Boot e onde é o Root
@@ -229,10 +234,24 @@ mount /dev/sda2 /mnt
 mount --mkdir /dev/sda1 /mnt/boot
 ```
 
-# 3 Instalação, finalmente!
-Tem que começar instalando os pacotes básicos
+<details> 
+
+- Usar o comando abaixo pra ver se o `mountpoints` das partições ficou certo
 ```
- pacstrap /mnt base linux linux-firmware
+lsblk -f
+```
+
+<img width="720" height="113" alt="image" src="https://github.com/user-attachments/assets/640e71cd-5a77-4083-95de-c499aaabb580" />  
+
+> Partição sda1: EFI, vFAT (FAT32), /mnt/Boot
+> Partição sda2: btrfs, /mnt
+</details>
+
+# 3 Instalação, finalmente!
+
+## 3.1 Instalar os pacotes básicos
+```
+ pacstrap /mnt base linux linux-firmware nano
 ```
 
 
