@@ -41,26 +41,25 @@ A maioria dos tutoriais que eu vi, falam de instalar o Grub como Bootloader, mas
 ### Dito tudo isso... Segue o manual de instalação abaixo.
 </details>
 
-# Instalando o Arch-Linux
-O processo pode ser feito seguindo o (Manual da ArchWiki)[https://wiki.archlinux.org/title/Installation_guide]. Mas recomendo seguir este método de instalação para deixar ele já configurado e evitar várias etapas da pós instalação. 
-
 # 1 Pré-instalação
+O processo pode ser feito seguindo o (Manual da ArchWiki)[https://wiki.archlinux.org/title/Installation_guide]. Mas prefiro seguir este método de instalação, para deixar ele já configurado e evitar várias etapas da pós instalação. 
+
 ## 1.1 Baixar uma imagem de instalação
-Faça o [Download do Arch-Linux](https://archlinux.org/download/) via Magnet Link ou Torrent.
+Fazer o [Download do Arch-Linux](https://archlinux.org/download/) via Magnet Link ou Torrent.
 
 ## 1.2 Preparar a mídia de instalação (Pendrive ou HD)
 Pode usar o [Rufus](https://rufus.ie), [Ventoy](https://www.ventoy.net/en/download.html), [Balena Etcher](https://etcher.balena.io/#download-etcher) ou o [Easy2Boot](https://easy2boot.xyz/download/) (uso esse). Caso for um Mr. Robot na vida, é só usar um desses [outros métodos](https://wiki.archlinux.org/title/USB_flash_installation_medium). 
 
-Feito isso, já pode ligar pressionando `DEL`, `ESC`, `F2`, `F4`, `F10`, `F12` ou alguma outra tecla, depende do seu equipamento. O importante é iniciar pelo USB no computador que vai ser instalado.  
+Feito isso, já pode ligar pressionando `DEL`, `ESC`, `F2`, `F4`, `F10`, `F12` ou alguma outra tecla, depende do equipamento. O importante é iniciar pelo USB no computador que vai ser instalado.
+> A Bios da placa-mãe precisa estar com o `Secure Mode` desativado e o `UEFI Boot` habilitado. No menu de boot, tem que inciar pela opção que tem UEFI no nome.
 
 Depois que iniciar ele vai mostrar "Welcome to Arch-Linux" e depois subir uma pá de letras. Quando parar, vai ter um trecho assim:  
 `root@archiso~#`  
 
 Daqui em diante é escrever comandos, imaginar como se fosse uma conversa com um bot de atendimento do delivery de comida e estou apenas digitando as opções do pedido.  
 
-## 1.3 Definir o layout e fonte do teclado do console
-
-No Brasil se usa dois tipos de teclado ABNT, tem que escolher o certo. Caso seja um Mac a posição das teclas é diferente, mas o princípio é o mesmo. Também é possível remapear as teclas depois de finalizar a instalação e deixar identico aos outros computadores normais.
+## 1.3 Definir o layout do teclado
+No Brasil se usa dois tipos de teclado ABNT. No Macbook a posição das teclas é meio diferente, mas funciona igual.  
 
 ABNT (teclados que **não tem** a tecla `AltGr` à direita da barra de espaço e tem no máximo dois caracteres na mesma tecla) 
 ```
@@ -70,7 +69,7 @@ ABNT2 (teclados que **tem** a tecla `AltGr` à direita da barra de espaço e tem
 ```
 loadkeys br-abnt2   
 ```
-Se não escolher o correto algumas teclas ficam digitando errado e vai atrapalhar. Esse comando mostra a lista de todos os layouts de teclado.
+Se não escolher o correto, algumas teclas ficam digitando errado e isso vai atrapalhar. Esse comando mostra a lista de todos os layouts de teclado, caso precisar de um diferente.
 ``` 
 localectl list-keymaps
 ```
@@ -82,8 +81,9 @@ Pra saber se vai dar certo nesse computador tem que digitar
 cat /sys/firmware/efi/fw_platform_size
 ```
 >- Se o comando retornar `64` ou `32`, o sistema será inicializado no modo UEFI e terá um UEFI x64 de 64 bits, ou UEFI IA32 de 32 bits.
->- Se o sistema não inicializou no modo UEFI, provavelmente a configuração da BIOS tá errada e ele iniciou no modo BIOS.
->- Se retornar `No such file or directory`, o sistema poderá ser inicializado no modo BIOS (ou CSM). Então esse manual não serve, use o Manual pra GRUB.
+>  Ambos funcionam com Systemd-boot e vai dar certo.
+>- Se retornar `No such file or directory`, o sistema pode ter inicializado no modo BIOS (ou CSM) em vez de UEFI.
+>  Nesse caso, tem que confirmar se a placa-mãe tem suporte a UEFI e se tá habilitado, se não tiver suporte, vai ter que usar o GRUB em vez do Systemd-boot.
 </details>
 
 ## 1.5 Conectar na internet
