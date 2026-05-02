@@ -1,7 +1,7 @@
-<details>  
 
 # Manual de instalação UEFI do arch-linux + Gnome puro + systemd-boot [PT_BR]
 Testei diversas distros Linux, especialmente as mais populares (Arch, Mint, Fedora, Ubuntu e Debian), e cheguei à conclusão que essa combinação foi a melhor para o meu uso cotidiano com melhor suporte ativo da comunidade, boa compatibilidade com pacotes de aplicativos e com maior liberdade de personalização, basicamente tudo que serve pra outras distros, serve aqui também e algumas vezes até mais fácil ainda de ser feito. E acima de tudo, que contenha apenas o obrigatório para o sistema funcionar, mas sempre deixando a possibilidade de instalar qualquer coisa que eu precisar futuramente.
+<details>  
 
 ## Por quê o Arch-Linux?
 Ele é baseado no Debian que é uma das primeiras distros baseadas em Linux, a qual eu percebi que tem uma variedade de pacotes e de suporte muito grande comparado com outras distros. E possui uma comunidade ativa que te ensina a fazer qualquer tipo de coisa nele, além da [ArchWiki](https://wiki.archlinux.org/) que parece uma Bíblia de tão completa e sempre atualizada. 
@@ -133,38 +133,29 @@ Essa etapa é opcional, nunca tive problemas, mas é melhor fazer ela só pra ev
 ```
 timedatectl set-ntp true
 ```
-
-## 1.7 Definir o idioma para pt_BR
-Abrir o arquivo modelo de configuração com o editor de texto via terminal
-```
-nano /etc/locale.gen
-```
-Descer com a seta e descomentar (apagar o `#` da frente) na linha escrito `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`. 
-Salvar com `CTRL`+`X` e `ENTER`
-
-Gerar o arquivo de idioma
-```
-locale-gen
-```
-
+<details>
+  
 # 2 Particionar, formatar e montar as partições
-Só pra esclarecer como funciona essa etapa. Primeiro tem que criar a partição, que é avisar pro sistema quanto espaço do disco pode ser usado pra cada partição criada, já que o disco tem escrita dinâmica então ele tá sempre gravando em setores diferentes mas sempre mantem a proporção de espaço pra cada partição. E também avisar pro sistema que tipo de partição é cada uma, principalmente pra ele saber onde fica o EFI do Boot. 
-
-Depois tem que formatar as partições pra definir o formato de arquivo, nesse caso vai ser só dois: Fat32 e Btrfs.
-
-Por último tem que montar os diretórios de pasta, dentro das partições, pra poder gravar cada coisa no lugar certo durante a instalação.
+Só pra esclarecer como funciona isso.  
+- Primeiro tem que criar a partição, que é avisar pro sistema quanto espaço do disco pode ser usado pra cada partição criada, já que o disco tem escrita dinâmica então ele tá sempre gravando em setores diferentes mas sempre mantem a proporção de espaço pra cada partição. E também avisar pro sistema que tipo de partição é cada uma, principalmente pra ele saber onde fica o EFI do Boot.  
+- Depois tem que formatar as partições pra definir o formato de arquivo, nesse caso vai ser só dois: Fat32 e Btrfs.  
+- Por último tem que montar os diretórios de pasta, dentro das partições, pra poder gravar cada coisa no lugar certo durante a instalação.  
+</details>
 
 ## 2.1 Particionar o disco antes de formatar
-Na instalação do sistema ele interpreta as unidades de disco como /dev/... (Sd pra SSD, nvme0n pra NVME, ...)  
-Pra saber qual é o dispositivo tem que usar o comando pra listar todas as unidades e descobrir pelo tipo ou pelo tamanho, o ideal é deixar conectado só o disco que vai ser formatado e a mídia de instalação.
+Pra saber qual é o dispositivo, tem que usar o comando pra listar todas as unidades e descobrir pelo tipo ou pelo tamanho, o ideal é deixar conectado só o disco que vai ser formatado e a mídia de instalação, pra não fazer besteira.
 ```
 fdisk -l
 ```
-Pra facilitar nos exemplos, vou considerar que seja um SSD
+> Na instalação do sistema, ele entende as unidades de disco como caminhos `/dev/ ...`  e usa abreviações como `sda` pra disco Sata, `nvme0n1` pra NVME e `vda` pra disco virtual. Ex: `/dev/sda`
+Nomes de disco com `rom`, `loop` or `airootfs`. ou cartões de memória removíveis com `rpmb`, `boot0` and `boot1` podem ser ignorados.  
+
+Pra facilitar nos exemplos, vou considerar que seja um disco Sata
 ```
 fdisk /dev/sda
 ```
-Usar o comando `d` pra ir apagando as partições que já existam no disco
+Usar o comando `d` pra ir apagando as partições que já existam no disco. E usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.
+
 
 Daqui pra frente é assim: 
 - O comando `n` cria uma nova partição
@@ -236,7 +227,18 @@ Tem que começar instalando os pacotes básicos
 
 
 
+## 1.7 Definir o idioma para pt_BR
+Abrir o arquivo modelo de configuração com o editor de texto via terminal
+```
+nano /etc/locale.gen
+```
+Descer com a seta e descomentar (apagar o `#` da frente) na linha escrito `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`. 
+Salvar com `CTRL`+`X` e `ENTER`
 
+Gerar o arquivo de idioma
+```
+locale-gen
+```
 
 
 
