@@ -158,7 +158,7 @@ timedatectl set-ntp true
 # 2 Particionar, formatar e montar as partições
 
 Só pra esclarecer como funciona isso.  
-1. Criar a partição, que é avisar pro sistema quanto espaço do disco pode ser usado pra cada partição criada, e informar que tipo de partição é cada uma, pra ele ver que existe a partição EFI e a partição normal.  
+1. Criar a partição, que é avisar pro sistema quanto espaço do disco pode ser usado em cada partição criada. Informar que tipo de partição elas são, pra ele ver que existe partição EFI e partição normal.  
 2. Formatar as partições pra definir o formato de arquivo, nesse caso vai ser só dois: Fat32 e Btrfs.  
 3. Montar os diretórios de pasta, dentro das partições, pra poder gravar cada coisa no lugar certo durante a instalação.  
 </details>
@@ -186,7 +186,7 @@ Quando abrir o menu de partição é só usar o comando `d` e `Enter` pra ir apa
 
 Usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.
 
-### Criar a 1ª partição `/dev/sda1` <sup>(Boot, só serve pra iniciar o sistema)</sup>
+### Criar a partição `/dev/sda1` <sub>(Boot, só serve pra iniciar o sistema)</sub>
 > Sda1, 1Gb, UEFI
 
 1. Comando `n` pra criar uma nova partição
@@ -196,16 +196,14 @@ Usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.
 5. digitar `t` pra definir o tipo de partição, pro sistema saber pra que ela vai ser usada depois: `1`
 > Pra ver o número da opção de cada tipo de partição é só usar o comando `l` e depois `q` pra voltar
 
-### Criar a 2ª partição `/dev/sda2` <sup>(Root, onde fica os arquivos do sistema e do usuário)</sup>
+### Criar a 2ª partição `/dev/sda2` <sub>(Root, onde fica os arquivos do sistema e do usuário)</sub>
 > Sda2, +espaço pra guardar os arquivos, Linux File System
 
 1. Comando `n` pra criar uma nova partição
 2. Escolher um número pra identificar a partição: `2`
 3. Vai ser sugerido um setor inicial, é só pressionar `Enter`
 4. Vai perguntar o setor final, pode digitar um tamanho igual feito antes. Ou, pra usar o disco todo é só pressionar `Enter` 
-5. digitar `t` pra definir o tipo de partição, pro sistema saber pra que ela vai ser usada depois: `20`  
-> Pra ver o número da opção de cada tipo de partição é só usar o comando `l` e depois `q` pra voltar
-
+> O tipo de partição já vai ser mostrado como `Linux filesystem`
 Salvar usando `w` e `Enter`  
 
 <details> 
@@ -220,15 +218,14 @@ lsblk
 > Aqui ficou como 1gb na partição boot, e 19gb na partição root
 </details>
 
-## 2.2 Formatar o disco
-É só definir qual é o formato do sistema de arquivo em cada partição
+## 2.2 Formatar as partições criadas
 
-- Partição boot
+### Partição boot
 ```
 mkfs.fat -F32 /dev/sda1 
 ```
 
-- Partição root
+### Partição root
 ```
 mkfs.btrfs /dev/sda2
 ```
@@ -272,20 +269,23 @@ lsblk -f
 </details>
 
 # 3 Instalação, finalmente!
-O Arch é igual um Lego, tem que ir montando cada parte dele durante a instalação
+
+O Arch é igual um Lego, tem que ir montando cada parte durante a instalação
 
 ## 3.1 Instalar os pacotes básicos
-Esse comando baixa e salva no root: o pacote mínimo base pra instalação do sistema; um editor de texto via terminal; o kernel com módulos Linux; Firmware pra o funcionamento do hardware (drivers básicos). 
+
+Baixar e salvar no root: o pacote mínimo base pra instalação do sistema; um editor de texto via terminal; o kernel com módulos Linux; Firmware pra o funcionamento do hardware (drivers básicos). 
 ```
  pacstrap /mnt base nano linux linux-firmware
 ```
 
-## 3.2 Gerar o a tabela de partições 
-Para o sistema salvar a lista das partições criadas é preciso gerar o arquivo `fstab` usando o comando:
+## 3.2 Gerar a tabela de partições pra ordem de inicialização
+
+Gerar o arquivo `fstab` usando o comando:
 ```
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
-> Dica: Algumas vezes o sistema não lista todas as partições, então é bom usar o comando abaixo, pra confirmar se já contém todas, ou vai ser preciso repetir o processo.
+> Dica: Algumas vezes o sistema não lista todas as partições, então é bom usar o comando abaixo, pra confirmar se já contém todas, ou se vai ser preciso repetir o processo.
 ```
 cat /mnt/etc/fstab
 ```
