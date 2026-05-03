@@ -345,6 +345,13 @@ timedatectl list-timezones
 ```
 hwclock --systohc
 ```
+
+### Definir o layout do teclado depois de instalado
+> Usar a mesma referência de layout da instalação
+```
+echo "KEYMAP=br-abnt2" >> /etc/vconsole.conf
+```
+
 ### Definir idioma pra pt_BR
 1. Abrir o arquivo com a lista de idiomas  
 ```
