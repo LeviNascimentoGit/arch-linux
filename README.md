@@ -4,7 +4,7 @@ Testei diversas distros Linux, especialmente as mais populares (Arch, Mint, Fedo
 <details>  
 
 ### Por quê o Arch-Linux?
-Ele é baseado no Debian que é uma das primeiras distros baseadas em Linux, a qual eu percebi que tem uma variedade de pacotes e de suporte muito grande comparado com outras distros. E possui uma comunidade ativa que te ensina a fazer qualquer tipo de coisa nele, além da [ArchWiki](https://wiki.archlinux.org/) que parece uma Bíblia de tão completa e sempre atualizada. 
+Ele é baseado no Debian que é uma das primeiras distros baseadas em Linux, a qual eu percebi que tem uma variedade de pacotes e de suporte muito grande comparado com outras distros. E possui uma comunidade ativa que te ensina a fazer qualquer tipo de coisa nele, além da [ArchWiki](https://wiki.archlinux.org/) que parece uma Bíblia de tão completa e sempre atualizada, e te explica em detalhes tudo sobre o Arch, até os arquivos de sistema e como cada comando funciona. 
 
 - Por quê não instalar o Debian então?
 
@@ -292,7 +292,7 @@ cat /mnt/etc/fstab
 ```
 <details> 
 
-## 3.3 Criando uma partição de swap <sup>(Opcional)</sup> 
+## 3.3 Criando uma partição de swap <sub>(Opcional)</sub> 
 O Linux pode simular uma extensão de memória RAM usando uma parte do disco de armazenamento, igual os dispositivos da Xiaomi. Pra ativar é preciso criar uma `partição swap`.  
 
 - Entrar no modo de gerenciamento root do disco
@@ -324,7 +324,7 @@ Usar a seta pra ir até a ultima linha em branco e digitar
 ```
 /swapfile none swap defaults 0 0 
 ```
->Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
+> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 </details>
 
 ## 3.4 Definir região, hora e idioma
@@ -351,17 +351,17 @@ hwclock --systohc
 nano /etc/locale.gen
 ```
 2. Descer com a seta e descomentar (apagar o `#` da frente) nas linhas `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`.  
->Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
+> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 
 3. Gerar o arquivo de idioma
 ```
 locale-gen
 ```
-### Definir os formatos de DD/MM/AAAA e outras medidas no padrão brasileiro.
+### Definir os formatos de DD/MM/AAAA e outras medidas no padrão brasileiro
 ```
 nano /etc/locale.conf
 ```
-O arquivo vai abrir vazio, escrever o texto:
+Escrever o texto:
 ```
 LANG=pt_BR.UTF-8
 LC_NUMERIC=pt_BR.UTF-8
@@ -372,10 +372,32 @@ LC_MEASUREMENT=pt_BR.UTF-8
 ```
 >Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 
+### 3.5 Definir o Hostname
+> Pode ser alterado depois de instalado
+```
+echo "arch" >> /etc/hostname
+```
+3.6 Definir os IP hosts
+```
+nano /etc/hots
+```
+Logo depois do que estiver escrito. Digitar o texto usando a tecla `Tab` pra criar espaços entre as palavras:
+> Se um trecho já estiver escrito, passe pra próxima linha
+```
+127.0.0.1  localhost
+::1        localhost
+127.0.1.1  arch.localdomain  arch
+```
+> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 
+## 3.7 Definir uma senha pra acesso root
+```
+passwd
+```
+Digitar a nova senha duas vezes e não esquecer.
 
-
-
+##3.8 Instalar algumas ferramentas da internet
+pacman -S efibootmgr networkmanager network-manager-applet wireless_tools wpa_supplicant dialog os-prober mtools dofstools base-devel linux-headers
 
 
 
