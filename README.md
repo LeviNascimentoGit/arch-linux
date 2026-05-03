@@ -290,36 +290,38 @@ genfstab -U /mnt >> /mnt/etc/fstab
 ```
 cat /mnt/etc/fstab
 ```
-<details> 
 
-## 3.3 Criando uma partição de swap <sub>(Opcional)</sub> 
-O Linux pode simular uma extensão de memória RAM usando uma parte do disco de armazenamento, igual os dispositivos da Xiaomi. Pra ativar é preciso criar uma `partição swap`.  
+## 3.3 Continuar os processos no diretório root
 
-- Entrar no modo de gerenciamento root do disco
 ```
 arch-chroot /mnt
 ```
-- Alocar separando uma parte do armazenamento e criando um diretório de partição
+
+<details> 
+
+## 3.4 Criando uma partição de swap <sub>(Opcional)</sub> 
+
+1. Alocar separando uma parte do armazenamento e criando um diretório de `partição swap`
 ```
 fallocate -l 4GB /swapfile
 ```
-- Dar as permissões necessárias para o diretório criado
+2. Dar as permissões necessárias para o diretório criado
 ```
 chmod 600 /swapfile
 ```
-- Definir o diretório pro formato swap
+3. Definir o diretório pro formato swap
 ```
 mkswap /swapfile
 ```
-- Ativar o diretório para o Swap
+4. Ativar o diretório para o Swap
 ```
 swapon /swapfile
 ```
-- Adicionar o diretório na lista de partições
+5. Adicionar o diretório na lista de partições
 ```
 nano /mnt/etc/fstab
 ```
-Usar a seta pra ir até a ultima linha em branco e digitar 
+6. Usar a seta pra ir até a ultima linha em branco e digitar 
 
 ```
 /swapfile none swap defaults 0 0 
@@ -327,7 +329,7 @@ Usar a seta pra ir até a ultima linha em branco e digitar
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 </details>
 
-## 3.4 Definir região, hora e idioma
+## 3.5 Definir região, hora e idioma
 
 ### Selecionar o fuso horário regional do computador, no meu caso é Norte do Brasil
 ```
@@ -379,12 +381,13 @@ LC_MEASUREMENT=pt_BR.UTF-8
 ```
 >Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 
-### 3.5 Definir o Hostname
+## 3.6 Definir o Hostname
+
 > Pode ser alterado depois de instalado
 ```
 echo "arch" >> /etc/hostname
 ```
-3.6 Definir os IP hosts
+## 3.7 Definir os IP hosts
 ```
 nano /etc/hosts
 ```
@@ -397,12 +400,12 @@ Manter as linhas que já existem e escrever as linhas que estão faltando
 ```
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 
-## 3.7 Definir uma senha pra acesso root
+## 3.8 Definir uma senha pra acesso root
 ```
 passwd
 ```
 
-##3.8 Instalar algumas ferramentas da internet
+## 3.9 Instalar algumas ferramentas da internet
 ```
 pacman -S efibootmgr networkmanager network-manager-applet wireless_tools wpa_supplicant dialog os-prober mtools dofstools base-devel linux-headers
 ```
