@@ -61,20 +61,21 @@ Depois que iniciar ele vai mostrar "Welcome to Arch-Linux" e depois subir uma p�
 `root@archiso~#`  
 
 Daqui em diante é escrever comandos, imaginar como se fosse uma conversa com um bot de atendimento do delivery de comida e estou apenas digitando as opções do pedido.  
+> Dica: Pra interromper qualquer processo é `CTRL`+`C` e sempre que precisar limpar a tela é `CTRL`+`L`
 
 ## 1.3 Definir o layout do teclado
 
 No Brasil se usa dois tipos de teclado ABNT. No Macbook a posição das teclas é meio diferente, mas funciona igual.  
 
-ABNT (teclados que **não tem** a tecla `AltGr` à direita da barra de espaço e tem no máximo dois caracteres na mesma tecla) 
+ABNT: Teclados que **não tem** a tecla `AltGr` à direita da barra de espaço e aparece no máximo dois caracteres na mesma tecla  
 ```
 loadkeys br-abnt   
 ```
-ABNT2 (teclados que **tem** a tecla `AltGr` à direita da barra de espaço e tem três caracteres na mesma tecla, por exemplo `+ = §`).
+ABNT2: Teclados que **tem** a tecla `AltGr` à direita da barra de espaço e aparece três caracteres juntos na mesma tecla, por exemplo `+ = §`
 ```
 loadkeys br-abnt2   
 ```
-Se não escolher o correto, algumas teclas ficam digitando errado e isso vai atrapalhar. Esse comando mostra a lista de todos os layouts de teclado, caso precisar de um diferente.
+Se não selecionar o layout correto, algumas teclas ficam digitando errado e isso vai atrapalhar. Caso seja um teclado internacional, esse comando mostra uma lista de todos os teclados:
 ``` 
 localectl list-keymaps
 ```
@@ -82,59 +83,62 @@ localectl list-keymaps
 
 ## 1.4 Verificar o modo de boot
 
-Pra saber se vai dar certo nesse computador tem que digitar
+Pra saber logo se vai dar certo nesse computador tem que digitar:  
 ```
 cat /sys/firmware/efi/fw_platform_size
 ```
->- Se o comando retornar `64` ou `32`, o sistema será inicializado no modo UEFI e terá um UEFI x64 de 64 bits, ou UEFI IA32 de 32 bits.
->  Ambos funcionam com Systemd-boot e vai dar certo.
->- Se retornar `No such file or directory`, o sistema pode ter inicializado no modo BIOS (ou CSM) em vez de UEFI.
->  Nesse caso, tem que confirmar se a placa-mãe tem suporte a UEFI e se tá habilitado, se não tiver suporte, vai ter que usar o GRUB em vez do Systemd-boot.
+>- Se o comando retornar `64` ou `32`, o sistema será inicializado no modo UEFI e terá um UEFI x64 de 64 bits, ou UEFI IA32 de 32 bits.  
+>  Ambos funcionam com Systemd-boot e vai dar certo.  
+>- Se retornar `No such file or directory`, o sistema pode ter inicializado no modo BIOS (ou CSM) em vez de UEFI.  
+>  Nesse caso, tem que confirmar se a placa-mãe tem suporte a UEFI e se tá habilitado, se não tiver suporte, vai ter que usar o GRUB em vez do Systemd-boot.  
 </details>
 
 ## 1.5 Conectar na internet
 
-É obrigatório ter internet pra instalar o Arch-linux, porque ele só contém o básico do terminal Kernel na imagem de instalação, todos os aplicativos e interface gráfica é baixado de acordo com a escolha do usuário.  
-- Conexão Ethernet, via cabo  
-Se for uma conexão LAN pelo cabo de rede, é só confirmar se está habilitado
+É obrigatório ter internet pra instalar o Arch-linux, porque todos os aplicativos e interface gráfica é baixado de acordo com a escolha do usuário.  
+
+### Conexão Ethernet, via cabo de rede LAN    
+Comando pra confirmar se está habilitado. Se mostrar `Enable` então já tem que estar funcionando.   
 ```
 ip link
 ```
-Se estiver `Enable` então já deve estar funcionando, pra testar é só dar um comando de ping.
-```
-ping google.com
-```
-- Conexão Wireless, via Wi-Fi  
-Se for uma conexão via Wi-Fi, então use o comando pra entrar no menu de configuração de wi-fi
+
+### Conexão Wireless, via Wi-Fi  
+Se for uma conexão via Wi-Fi, então use o comando pra entrar no menu de configuração de wi-fi:  
 ```
 iwctl
 ```
 <details>
   
-Esse é o comando pra listar as placas de rede e saber o nome do dispositivo pra usar na próxima etapa
-> Se for um notebook com Wi-Fi integrado ou se o computador tiver apenas uma placa de rede Wi-Fi, o nome do dispositivo vai ser `wlan0`, então dá até pra pular essa parte.
+Esse é o comando pra listar as placas de rede e saber o nome do dispositivo pra usar na próxima etapa:    
+> Se for um notebook com Wi-Fi integrado ou se o computador tiver apenas uma placa de rede Wi-Fi, o nome do dispositivo vai ser `wlan0`, então dá até pra pular essa parte  
 ```
 device list
 ```
-> (Vou considerar que o nome do dispositivo seja `wlan0`, porque é esse na maioria dos casos)
 
-Pra buscar as redes disponíveis
-> Se souber o nome exato da rede Wi-Fi (incluindo maiúsculas/minúsculas e pontuações), também pode pular essa parte.
+Pra buscar as redes disponíveis:  
+> Se souber o nome exato da rede Wi-Fi (incluindo maiúsculas/minúsculas e pontuações), também pode pular essa parte  
 ```
 station wlan0 scan
 ```
+> (Vou considerar que o nome do dispositivo seja `wlan0`, porque é esse na maioria dos casos)  
 </details>
 
 Selecionar o dispositivo de Wi-Fi e conectar na rede  
-> No meu caso eu conectei na que estava disponível aqui, tem que ser o nome exato incluindo espaços e até quando tem `2.4` ou `_5G` no final.
+> No meu caso eu conectei na que estava disponível aqui, tem que ser o nome exato incluindo espaços e até quando tem `2.4` ou `_5G` no final.  
 ```
 station wlan0 connect Internet do vizinho_5G
 ```
-Aqui ele vai pedir a `passphrase` que é a senha, é só digitar. Se em até 10 segundos não mostrar uma mensagem de erro. É porque funcionou!
+Aqui ele vai pedir a `passphrase` que é a senha, é só digitar. Se em até 10 segundos não mostrar uma mensagem de erro. É porque conectou.  
 
-> Dá pra testar usando o comando de ping.
+> Dica: Pra testar é só usar o comando de ping em algum site, assim:
+```
+ping google.com
+```
+> Dica: `CTRL`+`C` pra interromper, `CTRL`+`L` pra limpar a tela.
 
-## 1.6 Definir Hora e Data pela rede
+## 1.6 Definir Hora e Data pela rede 
+
 Essa etapa é opcional, nunca tive problemas, mas é melhor fazer ela só pra evitar problemas relacionado a baixar pacotes por causa da diferença na data e hora do sistema comparado aos servidores.
 
 ```
@@ -197,7 +201,7 @@ Salvar usando `w` e `Enter`
 
 <details> 
 
-- Usar o comando abaixo pra ver se o tamanho e o tipo das partições ficou certo
+> Dica: Usar o comando abaixo pra ver se o tamanho e o tipo das partições ficou certo
 ```
 lsblk
 ```
@@ -221,7 +225,7 @@ mkfs.btrfs /dev/sda2
 ```
 <details> 
 
-- Usar o comando abaixo pra ver se o formato do sistema de arquivo ficou certo em cada partição
+> Dica: Usar o comando abaixo pra ver se o formato do sistema de arquivo ficou certo em cada partição
 ```
 lsblk -f
 ```
@@ -247,7 +251,7 @@ mount --mkdir /dev/sda1 /mnt/boot
 
 <details> 
 
-- Usar o comando abaixo pra ver se o `mountpoints` das partições ficou certo
+> Dica: Usar o comando abaixo pra ver se o `mountpoints` das partições ficou certo
 ```
 lsblk -f
 ```
@@ -272,7 +276,7 @@ Para o sistema salvar a lista das partições criadas é preciso gerar o arquivo
 ```
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
-> Percebi que algumas vezes o sistema não lista todas as partições, então é bom usar o comando abaixo, pra confirmar se já contém todas, ou vai ser preciso repetir o processo.
+> Dica: Algumas vezes o sistema não lista todas as partições, então é bom usar o comando abaixo, pra confirmar se já contém todas, ou vai ser preciso repetir o processo.
 ```
 cat /mnt/etc/fstab
 ```
@@ -281,11 +285,11 @@ cat /mnt/etc/fstab
 ## 3.3 Criando uma partição de swap <sup>(Opcional)</sup> 
 O Linux pode simular uma extensão de memória RAM usando uma parte do disco de armazenamento, igual os dispositivos da Xiaomi. Pra ativar é preciso criar uma `partição swap`.  
 
-- Começar entrando no modo de gerenciamento root do disco
+- Entrar no modo de gerenciamento root do disco
 ```
 arch-chroot /mnt
 ```
-- Depois alocar, separando uma parte do armazenamento e criando um diretório
+- Alocar separando uma parte do armazenamento e criando um diretório de partição
 ```
 fallocate -l 4GB /swapfile
 ```
@@ -313,12 +317,15 @@ Usar a seta pra ir até a ultima linha em branco e digitar
 Usar `CTRL`+`O` pra salvar e `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 </details>
 
-3.4 Criar 
+## 3.4 Ajustando a hora
+
+Aqui é selecionado o fuso horário regional do computador, no meu caso é Norte do Brasil
 ```
-fallocate -l 4GB /swapfile
+ln -sf /user/shar/zoneinfo/America/Belem
 ```
+> Dica: Pra ver todas as regiões é só usar o comando
 ```
-fallocate -l 4GB /swapfile
+timedatectl list-timezones
 ```
 ```
 fallocate -l 4GB /swapfile
