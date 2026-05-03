@@ -386,10 +386,10 @@ echo "arch" >> /etc/hostname
 ```
 3.6 Definir os IP hosts
 ```
-nano /etc/hots
+nano /etc/hosts
 ```
-Logo depois do que estiver escrito. Digitar o texto usando a tecla `Tab` pra criar espaços entre as palavras:
-> Se um trecho já estiver escrito, passe pra próxima linha
+Manter as linhas que já existem e escrever as linhas que estão faltando
+>  Usar a tecla `Tab` em vez da tecla `Espaço`.
 ```
 127.0.0.1  localhost
 ::1        localhost
@@ -401,11 +401,11 @@ Logo depois do que estiver escrito. Digitar o texto usando a tecla `Tab` pra cri
 ```
 passwd
 ```
-Digitar a nova senha duas vezes e não esquecer.
 
 ##3.8 Instalar algumas ferramentas da internet
+```
 pacman -S efibootmgr networkmanager network-manager-applet wireless_tools wpa_supplicant dialog os-prober mtools dofstools base-devel linux-headers
-
+```
 
 
 
