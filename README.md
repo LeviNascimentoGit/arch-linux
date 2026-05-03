@@ -243,14 +243,15 @@ lsblk -f
 </details>
 
 ## 2.3 Criar os pontos de montagem
-Apontar pro sistema em qual diretório de pasta vai ficar o Boot e onde é o Root
 
-### Montar o diretório Root na partição 2  
+Apontar pro sistema o diretório de cada partição, é importante montar os diretórios em ordem crescente, primeiro `/mnt` e depois `/mnt/boot`
+
+### 1. Montar o diretório Root  
 ```
 mount /dev/sda2 /mnt
 ```
 
-### Montar o diretório Boot na partição 1  
+### 2. Montar o diretório Boot 
 ```
 mount --mkdir /dev/sda1 /mnt/boot
 ```
