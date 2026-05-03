@@ -324,62 +324,73 @@ Usar a seta pra ir até a ultima linha em branco e digitar
 ```
 /swapfile none swap defaults 0 0 
 ```
-Usar `CTRL`+`O` pra salvar e `Enter` pra confirmar. `CTRL`+`X` pra fechar.
+>Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 </details>
 
-## 3.4 Ajustando a hora
+## 3.4 Definir região, hora e idioma
 
-Aqui é selecionado o fuso horário regional do computador, no meu caso é Norte do Brasil
+### Selecionar o fuso horário regional do computador, no meu caso é Norte do Brasil
 ```
-ln -sf /user/shar/zoneinfo/America/Belem
+ln -sf /user/shar/zoneinfo/America/Belem /etc/localtime
 ```
+<details>
+  
 > Dica: Pra ver todas as regiões é só usar o comando
 ```
 timedatectl list-timezones
 ```
+</details>
+
+### Sincronizar o relógio da BIOS com o sistema
 ```
-fallocate -l 4GB /swapfile
+hwclock --systohc
 ```
-```
-fallocate -l 4GB /swapfile
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 1.7 Definir o idioma para pt_BR
-Abrir o arquivo modelo de configuração com o editor de texto via terminal
+### Definir idioma pra pt_BR
+1. Abrir o arquivo com a lista de idiomas  
 ```
 nano /etc/locale.gen
 ```
-Descer com a seta e descomentar (apagar o `#` da frente) na linha escrito `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`. 
+2. Descer com a seta e descomentar (apagar o `#` da frente) nas linhas `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`.  
+>Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 
-Usar `CTRL`+`O` pra salvar e `Enter` pra confirmar. `CTRL`+`X` pra fechar.
-
-Gerar o arquivo de idioma
+3. Gerar o arquivo de idioma
 ```
 locale-gen
 ```
+### Definir os formatos de DD/MM/AAAA e outras medidas no padrão brasileiro.
+```
+nano /etc/locale.conf
+```
+O arquivo vai abrir vazio, escrever o texto:
+```
+LANG=pt_BR.UTF-8
+LC_NUMERIC=pt_BR.UTF-8
+LC_TIME=pt_BR.UTF-8
+LC_MONETARY=pt_BR.UTF-8
+LC_PAPER=pt_BR.UTF-8
+LC_MEASUREMENT=pt_BR.UTF-8
+```
+>Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
