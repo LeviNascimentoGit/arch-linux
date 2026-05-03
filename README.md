@@ -103,39 +103,48 @@ Comando pra confirmar se está habilitado. Se mostrar `Enable` então já tem qu
 ip link
 ```
 
-### Conexão Wireless, via Wi-Fi  
-Se for uma conexão via Wi-Fi, então use o comando pra entrar no menu de configuração de wi-fi:  
+### Conexão Wireless, via Wi-Fi
+Comando pra abrir o menu de configuração:
 ```
 iwctl
 ```
 <details>
   
-Esse é o comando pra listar as placas de rede e saber o nome do dispositivo pra usar na próxima etapa:    
-> Se for um notebook com Wi-Fi integrado ou se o computador tiver apenas uma placa de rede Wi-Fi, o nome do dispositivo vai ser `wlan0`, então dá até pra pular essa parte  
+Listar as placas de rede e saber o nome do dispositivo pra usar na próxima etapa:    
+> Se for um notebook com Wi-Fi integrado ou se o computador tiver apenas uma placa de rede Wi-Fi, provavelmente o nome do dispositivo vai ser `wlan0`, então pode pular essa etapa  
 ```
 device list
 ```
 
-Pra buscar as redes disponíveis:  
-> Se souber o nome exato da rede Wi-Fi (incluindo maiúsculas/minúsculas e pontuações), também pode pular essa parte  
+Buscar as redes disponíveis:  
+> Aqui eu já tô considerando que o nome era `wlan0`
+> Se souber o nome exato da rede Wi-Fi, também pode pular essa etapa  
 ```
 station wlan0 scan
 ```
-> (Vou considerar que o nome do dispositivo seja `wlan0`, porque é esse na maioria dos casos)  
+  
 </details>
 
 Selecionar o dispositivo de Wi-Fi e conectar na rede  
-> No meu caso eu conectei na que estava disponível aqui, tem que ser o nome exato incluindo espaços e até quando tem `2.4` ou `_5G` no final.  
+> No meu caso eu usei a internet da padaria, tem que ser o nome exato como aparece na busca, incluindo Maiúsculas/minúsculas, pontuações, espaços e símbolos.  
 ```
-station wlan0 connect Internet do vizinho_5G
+station wlan0 connect Padaria_5G
 ```
-Aqui ele vai pedir a `passphrase` que é a senha, é só digitar. Se em até 10 segundos não mostrar uma mensagem de erro. É porque conectou.  
+> Digitar a `passphrase` que é a senha e confirmar no `Enter`. Se em até 10 segundos não mostrar uma mensagem de erro. É porque conectou.
 
-> Dica: Pra testar é só usar o comando de ping em algum site, assim:
+Sair do menu e voltar pra instalação:
+```
+exit
+```
+<details>
+
+Pra testar é só usar o comando de ping em algum site, assim:
 ```
 ping google.com
 ```
 > Dica: `CTRL`+`C` pra interromper, `CTRL`+`L` pra limpar a tela.
+
+</details>
 
 ## 1.6 Definir Hora e Data pela rede 
 
@@ -149,9 +158,9 @@ timedatectl set-ntp true
 # 2 Particionar, formatar e montar as partições
 
 Só pra esclarecer como funciona isso.  
-- Primeiro tem que criar a partição, que é avisar pro sistema quanto espaço do disco pode ser usado pra cada partição criada, já que o disco tem escrita dinâmica então ele tá sempre gravando em setores diferentes mas sempre mantem a proporção de espaço pra cada partição. E também avisar pro sistema que tipo de partição é cada uma, pra ele saber onde provavelmente vai ficar o EFI do Boot.  
-- Depois tem que formatar as partições pra definir o formato de arquivo, nesse caso vai ser só dois: Fat32 e Btrfs.  
-- Por último tem que montar os diretórios de pasta, dentro das partições, pra poder gravar cada coisa no lugar certo durante a instalação.  
+1. Criar a partição, que é avisar pro sistema quanto espaço do disco pode ser usado pra cada partição criada, e informar que tipo de partição é cada uma, pra ele ver que existe a partição EFI e a partição normal.  
+2. Formatar as partições pra definir o formato de arquivo, nesse caso vai ser só dois: Fat32 e Btrfs.  
+3. Montar os diretórios de pasta, dentro das partições, pra poder gravar cada coisa no lugar certo durante a instalação.  
 </details>
 
 ## 2.1 Particionar o disco antes de formatar
@@ -180,21 +189,21 @@ Usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.
 ### Criar a 1ª partição `/dev/sda1` <sup>(Boot, só serve pra iniciar o sistema)</sup>
 > Sda1, 1Gb, UEFI
 
-- Comando `n` pra criar uma nova partição
-- Escolher um número pra identificar a partição: `1`
-- Vai ser sugerido um setor inicial, é só pressionar `Enter`
-- Vai perguntar o setor final, tem que colocar quanto vai ser somado no tamanho da partição e a unidade de medida, tudo junto: `+1g`
-- digitar `t` pra definir o tipo de partição, pro sistema saber pra que ela vai ser usada depois: `1`
+1. Comando `n` pra criar uma nova partição
+2. Escolher um número pra identificar a partição: `1`
+3. Vai ser sugerido um setor inicial, é só pressionar `Enter`
+4. Vai perguntar o setor final, tem que colocar quanto vai ser somado no tamanho da partição e a unidade de medida, tudo junto: `+1g`
+5. digitar `t` pra definir o tipo de partição, pro sistema saber pra que ela vai ser usada depois: `1`
 > Pra ver o número da opção de cada tipo de partição é só usar o comando `l` e depois `q` pra voltar
 
 ### Criar a 2ª partição `/dev/sda2` <sup>(Root, onde fica os arquivos do sistema e do usuário)</sup>
 > Sda2, +espaço pra guardar os arquivos, Linux File System
 
-- Comando `n` pra criar uma nova partição
-- Escolher um número pra identificar a partição: `2`
-- Vai ser sugerido um setor inicial, é só pressionar `Enter`
-- Vai perguntar o setor final, pode digitar um tamanho igual feito antes. Ou, pra usar o disco todo é só pressionar `Enter` 
-- digitar `t` pra definir o tipo de partição, pro sistema saber pra que ela vai ser usada depois: `20`  
+1. Comando `n` pra criar uma nova partição
+2. Escolher um número pra identificar a partição: `2`
+3. Vai ser sugerido um setor inicial, é só pressionar `Enter`
+4. Vai perguntar o setor final, pode digitar um tamanho igual feito antes. Ou, pra usar o disco todo é só pressionar `Enter` 
+5. digitar `t` pra definir o tipo de partição, pro sistema saber pra que ela vai ser usada depois: `20`  
 > Pra ver o número da opção de cada tipo de partição é só usar o comando `l` e depois `q` pra voltar
 
 Salvar usando `w` e `Enter`  
@@ -239,12 +248,12 @@ lsblk -f
 ## 2.3 Criar os pontos de montagem
 Apontar pro sistema em qual diretório de pasta vai ficar o Boot e onde é o Root
 
-- Pra montar o root tem que usar o comando
+### Montar o diretório Root na partição 2  
 ```
 mount /dev/sda2 /mnt
 ```
 
-- Pra montar o boot tem que usar o comando
+### Montar o diretório Boot na partição 1  
 ```
 mount --mkdir /dev/sda1 /mnt/boot
 ```
