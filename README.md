@@ -383,7 +383,7 @@ LC_MEASUREMENT=pt_BR.UTF-8
 
 ## 3.6 Definir o Hostname
 
-> Pode ser alterado depois de instalado
+> Pode ser alterado depois de instalado. Caso isso seja feito, tem que alterar em `hosts` também.
 ```
 echo "arch" >> /etc/hostname
 ```
@@ -405,9 +405,25 @@ Manter as linhas que já existem e escrever as linhas que estão faltando
 passwd
 ```
 
-## 3.9 Instalar algumas ferramentas da internet
+## 3.9 Criar um usuário
+1. Descomentar (apagar o # no início) apenas na linha `%wheel ALL=(ALL:ALL) ALL` e liberar as permissões de administrador do grupo `wheel`
 ```
-pacman -S efibootmgr networkmanager network-manager-applet wireless_tools wpa_supplicant dialog os-prober mtools dofstools base-devel linux-headers
+nano /etc/sudoers
+```
+2. Criar e adicionar um usuário ao grupo `wheel`
+```
+useradd -mG wheel usuario
+```
+3. Definir uma senha para o usuario
+```
+passwd usuario
+```
+
+
+
+Instalar algumas ferramentas da internet
+```
+pacman -S iwd dosfstools mtools efibootmgr networkmanager network-manager-applet wireless_tools wpa_supplicant dialog os-prober base-devel linux-headers
 ```
 
 
