@@ -407,7 +407,7 @@ passwd
 ```
 
 ## 3.9 Criar um usuário  
-1. Descomentar (apagar o # no início) apenas na linha `%wheel ALL=(ALL:ALL) ALL` e liberar as permissões de administrador do grupo `wheel`  
+1. Descomentar (apagar o # no início) apenas na linha `%wheel ALL=(ALL:ALL) ALL` pra liberar as permissões de administrador do grupo `wheel`  
 ```
 nano /etc/sudoers
 ```
@@ -422,20 +422,22 @@ passwd usuario
 
 # 4 Instalação dos pacotes  
 
-## 4.1 Instalar o suporte ao Boot UEFI <sub>(Obrigatório)</sub> 
+## 4.1 Instalar o suporte ao Boot UEFI <sub>(Obrigatório)</sub>
+
 ```
 pacman -S efibootmgr
 ```
 <details>
 
-## 4.2 Instalar pacotes úteis <sub>(Opcionais)</sub>  
+## 4.2 Instalar pacotes úteis de suporte <sub>(Opcionais)</sub>  
 
 > Dica: Continuar digitando na mesma linha, o nome dos pacotes adicionais, separados pela tecla `Espaço`.  
 
-- Suporte ao dual boot  
+- Dual boot  
 ```
 os-prober
 ```
+- Internet
 ```
 networkmanager
 ```
@@ -443,11 +445,11 @@ networkmanager
 ```
 systemctl enable NetworkManager
 ```
-- Suporte ao Wi-Fi  
+- Wi-Fi  
 ```
 iwd network-manager-applet wireless_tools wpa_supplicant
 ```
-- Suporte Bluetooth    
+- Bluetooth    
 ```
 bluez bluez-utils 
 ```
@@ -455,11 +457,11 @@ bluez bluez-utils
 ```
 systemctl enable bluetooth.service
 ```
-- Compatibilidade com partições de Windows  
+- Compatibilidade com partições do Windows  
 ```
 dosfstools mtools
 ```
-- Compatibilidade com pacotes de aplicativos de terceiros  
+- Compatibilidade com pacotes de aplicativos não oficiais   
 ```
 dialog base-devel linux-headers
 ```
@@ -484,6 +486,7 @@ bootctl --path=/boot install
 ```
 
 ## 5.2 Configurar o Systemd-boot
+
 1. Abrir o arquivo de configuração de entrada padrão
 ```
 nano boot/loader/loader.conf
@@ -501,8 +504,8 @@ nano nano boot/loader/entries/arch.conf
 4. Escrever isso e salvar
 >  Usar a tecla `Tab` depois da primeira palavra de cada linha.   
 ```
-title	  Arch-Linux
-linux	  /vmlinuz-linux
+title	Arch-Linux
+linux	/vmlinuz-linux
 initrd	/initramfs-linux.img
 options	root=/dev/sda2 rw
 ```
@@ -515,6 +518,28 @@ quiet systemd.show_status=auto vt.global_cursor_default=0
 </details>
 
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
+
+# 6 Instalando a interface gráfica  
+
+1. Instalar o Gnome puro
+```
+sudo pacman -S gdm gnome-shell gnome-desktop gnome-session gnome-keyring gnome-control-center gnome-settings-daemon gnome-software gnome-console xdg-user-dirs-gtk adwaita-icon-theme nautilus
+```
+2. Habilitar a tela de login
+```
+sudo systemctl enable gdm
+```
+
+# 7 Preparando pra reiniciar
+
+1. Desmontar todas as partições
+```
+umount -a
+```
+2. Reiniciar e remover a mídia de instalação
+```
+reboot
+``` 
 
 
 
