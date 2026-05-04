@@ -231,7 +231,7 @@ mkfs.fat -F32 /dev/sda1
 
 ### Partição root  
 ```
-mkfs.btrfs /dev/sda2
+mkfs.ext4 /dev/sda2
 ```
 <details> 
 
@@ -243,7 +243,7 @@ lsblk -f
 <img width="980" height="112" alt="image" src="https://github.com/user-attachments/assets/2acf2a0d-b074-4b4d-ab5f-ebc2bf2a9dcd" />
 
 > Partição sda1: EFI, vFAT (FAT32)  
-> Partição sda2: btrfs  
+> Partição sda2: ext4  
 </details>
 
 ## 2.3 Criar os pontos de montagem  
