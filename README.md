@@ -273,9 +273,9 @@ lsblk -f
 
 O Arch é igual um Lego, tem que ir montando cada parte durante a instalação  
 
-## 3.1 Instalar os pacotes básicos  
+## 3.1 Instalar o Linux
 
-Baixar e salvar no root: o pacote mínimo base pra instalação do sistema; um editor de texto via terminal; o kernel com módulos Linux; Firmware pra o funcionamento do hardware (drivers básicos).  
+Baixar os arquivos de pacote e criar o esquema de pastas no diretório raiz. Pacote mínimo base pra instalação do sistema; um editor de texto via terminal; kernel com módulos Linux; Firmware pra o funcionamento do hardware (drivers básicos).  
 ```
  pacstrap /mnt base nano linux linux-firmware
 ```
@@ -432,11 +432,15 @@ pacman -S efibootmgr
 
 > Dica: Continuar digitando na mesma linha, o nome dos pacotes adicionais, separados pela tecla `Espaço`.  
 
-- Suporte pra dual boot  
+- Suporte ao dual boot  
 ```
 os-prober
 ```
-- Gerenciamento de rede Wi-Fi  
+- Suporte ao Wi-Fi  
+```
+iwd networkmanager network-manager-applet wireless_tools wpa_supplicant
+```
+- Suporte Bluetooth    
 ```
 iwd networkmanager network-manager-applet wireless_tools wpa_supplicant
 ```
@@ -449,8 +453,15 @@ dosfstools mtools
 dialog base-devel linux-headers
 ```
 </details>
+Antes de seguir para o próximo passo é 
 
-# 5 Instalar o Systemd-boot
+# 5 Instalar o Systemd-boot  
+
+Entrar na raiz como administrador usando o systemd  
+```
+sudo arch-chroot -S /mnt
+```
+
 ## 5.1 
 
 
