@@ -420,21 +420,28 @@ useradd -mG wheel usuario
 passwd usuario
 ```
 
-# 4 Instalar pacotes úteis  
+# 4 Instalação dos pacotes  
 
-## 4.1 Instalar os pacotes obrigatórios  
+## 4.1 Instalar o suporte ao Boot UEFI <sub>(Obrigatório)</sub> 
 ```
-pacman -S efibootmgr networkmanager
+pacman -S efibootmgr
 ```
 <details>
 
-## 4.2 Instalar pacotes opcionais  
+## 4.2 Instalar pacotes úteis <sub>(Opcionais)</sub>  
 
 > Dica: Continuar digitando na mesma linha, o nome dos pacotes adicionais, separados pela tecla `Espaço`.  
 
 - Suporte ao dual boot  
 ```
 os-prober
+```
+```
+networkmanager
+```
+> Esse serviço precisa ser habilitado depois de baixar o pacote
+```
+systemctl enable NetworkManager
 ```
 - Suporte ao Wi-Fi  
 ```
@@ -443,6 +450,10 @@ iwd network-manager-applet wireless_tools wpa_supplicant
 - Suporte Bluetooth    
 ```
 bluez bluez-utils 
+```
+> Esse serviço precisa ser habilitado depois de baixar o pacote
+```
+systemctl enable bluetooth.service
 ```
 - Compatibilidade com partições de Windows  
 ```
