@@ -338,7 +338,7 @@ nano /mnt/etc/fstab
 
 ### Selecionar o fuso horário regional do computador, no meu caso é Norte do Brasil  
 ```
-ln -sf /user/shar/zoneinfo/America/Belem /etc/localtime
+ln -sf /usr/share/zoneinfo/America/Belem /etc/localtime
 ```
 <details>
   
