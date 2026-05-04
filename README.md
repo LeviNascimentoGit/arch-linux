@@ -422,9 +422,9 @@ passwd usuario
 
 # 4 Instalar pacotes úteis  
 
-## 4.1 Instalar o Gerenciador de Boot EFI <sub>(Obrigatório)</sub>  
+## 4.1 Instalar os pacotes obrigatórios  
 ```
-pacman -S efibootmgr
+pacman -S efibootmgr networkmanager
 ```
 <details>
 
@@ -438,11 +438,11 @@ os-prober
 ```
 - Suporte ao Wi-Fi  
 ```
-iwd networkmanager network-manager-applet wireless_tools wpa_supplicant
+iwd network-manager-applet wireless_tools wpa_supplicant
 ```
 - Suporte Bluetooth    
 ```
-iwd networkmanager network-manager-applet wireless_tools wpa_supplicant
+bluez bluez-utils 
 ```
 - Compatibilidade com partições de Windows  
 ```
@@ -453,16 +453,44 @@ dosfstools mtools
 dialog base-devel linux-headers
 ```
 </details>
-Antes de seguir para o próximo passo é 
 
-# 5 Instalar o Systemd-boot  
+# 5 Instalação do Bootloader  
 
-Entrar na raiz como administrador usando o systemd  
+> Antes de começar é preciso voltar até o modo inicial `root@archiso~#` usando o comando  
+```
+exit
+```
+
+## 5.1 Instalar o Systemd-boot  
+
+1. Entrar na raiz como administrador usando o systemd  
 ```
 sudo arch-chroot -S /mnt
 ```
+2. Instalar o system-boot no diretório Boot  
+```
+bootctl --path=/boot install
+```
 
-## 5.1 
+## 5.2 Configurar o Systemd-boot
+1. Abrir o arquivo de configuração de entrada padrão
+```
+nano boot/loader/loader.conf
+```
+2. Apagar a linha que começa com `default`, e substituir por:
+```
+default arch-*
+```
+> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
+
+3. Criar e configurar um arquivo de entrada padrão
+```
+nano nano boot/loader/entries/arch.conf
+```
+
+> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
+
+
 
 
 
