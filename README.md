@@ -395,9 +395,9 @@ nano /etc/hosts
 Manter as linhas que já existem e escrever as linhas que estão faltando  
 >  Usar a tecla `Tab` em vez da tecla `Espaço`.  
 ```
-127.0.0.1  localhost
-::1        localhost
-127.0.1.1  arch.localdomain  arch
+127.0.0.1	localhost
+::1			localhost
+127.0.1.1	arch.localdomain  arch
 ```
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
 
@@ -428,7 +428,7 @@ pacman -S efibootmgr
 ```
 <details>
 
-##4.2 Instalar pacotes opcionais  
+## 4.2 Instalar pacotes opcionais  
 
 > Dica: Continuar digitando na mesma linha, o nome dos pacotes adicionais, separados pela tecla `Espaço`.  
 
@@ -449,6 +449,36 @@ dosfstools mtools
 dialog base-devel linux-headers
 ```
 </details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
