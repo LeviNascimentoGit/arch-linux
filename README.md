@@ -203,8 +203,9 @@ fdisk /dev/sda
 1. Comando `n` pra criar uma nova partição  
 2. Escolher um número pra identificar a partição: `2`  
 3. Vai ser sugerido um setor inicial, é só pressionar `Enter`  
-4. Vai perguntar o setor final, pode digitar um tamanho igual feito antes. Ou, pra usar o disco todo é só pressionar `Enter`  
+4. Vai perguntar o setor final, pode definir um tamanho igual feito antes. Ou, pra usar o restante do disco é só pressionar `Enter`  
 > O tipo de partição já vai ser mostrado como `Linux filesystem`  
+
 > Se conter uma assinatura. Confirmar com `y` pra remover
 
 Salvar usando `w` e `Enter`  
