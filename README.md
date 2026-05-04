@@ -413,20 +413,6 @@ Manter as linhas que já existem e escrever as linhas que estão faltando
 passwd
 ```
 
-## 3.9 Criar um usuário  
-1. Descomentar (apagar o # no início) apenas na linha `%wheel ALL=(ALL:ALL) ALL` pra liberar as permissões de administrador do grupo `wheel`  
-```
-nano /etc/sudoers
-```
-2. Criar e adicionar um usuário ao grupo `wheel`  
-```
-useradd -mG wheel usuario
-```
-3. Definir uma senha para o usuario  
-```
-passwd usuario
-```
-
 # 4 Instalação dos pacotes  
 
 ## 4.1 Instalar o suporte ao Boot UEFI <sub>(Obrigatório)</sub>
@@ -473,6 +459,20 @@ dosfstools mtools
 dialog base-devel linux-headers
 ```
 </details>
+
+## 3.9 Criar um usuário  
+1. Descomentar (apagar o # no início) apenas na linha `%wheel ALL=(ALL:ALL) ALL` pra liberar as permissões de administrador do grupo `wheel`  
+```
+nano /etc/sudoers
+```
+2. Criar e adicionar um usuário ao grupo `wheel`  
+```
+useradd -mG wheel usuario
+```
+3. Definir uma senha para o usuario  
+```
+passwd usuario
+```
 
 # 5 Instalação do Bootloader  
 
