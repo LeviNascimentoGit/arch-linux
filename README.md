@@ -148,7 +148,7 @@ ping google.com
 
 ## 1.6 Definir Hora e Data pela rede  
 
-Essa etapa é opcional, nunca tive problemas, mas é melhor fazer ela só pra evitar problemas relacionado a baixar pacotes por causa da diferença na data e hora do sistema comparado aos servidores.  
+Sincronizar data e hora da máquina com o NTP do servidor Linux, pra evitar problema ao baixar pacotes.
 
 ```
 timedatectl set-ntp true
@@ -177,14 +177,14 @@ lsblk
 > Nomes de disco com `rom`, `loop` or `airootfs`. ou cartões de memória removíveis com `rpmb`, `boot0` and `boot1` podem ser ignorados.  
 </details>
 
-Nos exemplos vou considerar que seja pra particionar o primeiro disco Sata.  
+1. Nos exemplos vou considerar que seja pra particionar o primeiro disco Sata.  
 ```
 fdisk /dev/sda
 ```
-Quando abrir o menu de partição é só usar o comando `d` e `Enter` pra ir apagando as partições que já existam no disco até retornar  
+2. Entrar com o comando `d` e confirmar o número da partição com `Enter`, pra ir apagando as partições que já existam no disco até retornar  
 `No partition is defined yet!`  
 
-Usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.  
+3. Usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.  
 
 ### Criar a partição `/dev/sda1` <sub>(Boot, só serve pra iniciar o sistema)</sub>  
 > Sda1, 1Gb, UEFI  
@@ -192,8 +192,9 @@ Usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.
 1. Comando `n` pra criar uma nova partição  
 2. Escolher um número pra identificar a partição: `1`  
 3. Vai ser sugerido um setor inicial, é só pressionar `Enter`  
-4. Vai perguntar o setor final, tem que colocar quanto vai ser somado no tamanho da partição e a unidade de medida, tudo junto: `+1g`  
-5. digitar `t` pra definir o tipo de partição, pro sistema saber pra que ela vai ser usada depois: `1`  
+4. Vai perguntar o setor final, tem que colocar quanto vai ser somado no tamanho da partição e a unidade de medida, tudo junto: `+1g`
+> Se conter uma assinatura. Confirmar com `y` pra remover
+5. Digitar `t` pra definir o tipo de partição pra UEFI e o sistema saber pra que ela vai ser usada depois: `1`  
 > Pra ver o número da opção de cada tipo de partição é só usar o comando `l` e depois `q` pra voltar  
 
 ### Criar a 2ª partição `/dev/sda2` <sub>(Root, onde fica os arquivos do sistema e do usuário)</sub>  
@@ -204,6 +205,8 @@ Usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.
 3. Vai ser sugerido um setor inicial, é só pressionar `Enter`  
 4. Vai perguntar o setor final, pode digitar um tamanho igual feito antes. Ou, pra usar o disco todo é só pressionar `Enter`  
 > O tipo de partição já vai ser mostrado como `Linux filesystem`  
+> Se conter uma assinatura. Confirmar com `y` pra remover
+
 Salvar usando `w` e `Enter`  
 
 <details> 
