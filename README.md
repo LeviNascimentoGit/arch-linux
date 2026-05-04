@@ -487,7 +487,10 @@ default arch-*
 ```
 nano nano boot/loader/entries/arch.conf
 ```
-
+title	Levi OS
+linux	/vmlinuz-linux
+initrd	/initramfs-linux.img
+options	root=/dev/sda2 rw quiet systemd.show_status=auto vt.global_cursor_default=0
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 
 
