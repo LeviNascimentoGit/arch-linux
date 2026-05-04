@@ -275,14 +275,16 @@ lsblk -f
 
 # 3 Instalação, finalmente!  
 
-O Arch é igual um Lego, tem que ir montando cada parte durante a instalação  
+O Arch é igual um Lego, tem que ir montando cada parte durante a instalação.
 
 ## 3.1 Instalar o Linux
 
 Baixar os arquivos de pacote e criar o esquema de pastas no diretório raiz. Pacote mínimo base pra instalação do sistema; um editor de texto via terminal; kernel com módulos Linux; Firmware pra o funcionamento do hardware (drivers básicos).  
 ```
- pacstrap /mnt base nano linux linux-firmware
+pacstrap -K /mnt base nano linux linux-firmware
 ```
+
+Adicionar amd-code, intel-ucode ou nvidia
 
 ## 3.2 Gerar a tabela de partições pra ordem de inicialização  
 
