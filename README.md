@@ -308,28 +308,28 @@ arch-chroot /mnt
 
 1. Alocar separando uma parte do armazenamento e criando um diretório de `partição swap`  
 ```
-fallocate -l 4GB /swapfile
+fallocate -l 4GB /swap
 ```
 2. Dar as permissões necessárias para o diretório criado  
 ```
-chmod 600 /swapfile
+chmod 600 /swap
 ```
 3. Definir o diretório pro formato swap  
 ```
-mkswap /swapfile
+mkswap /swap
 ```
 4. Ativar o diretório para o Swap  
 ```
-swapon /swapfile
+swapon /swap
 ```
 5. Adicionar o diretório na lista de partições  
 ```
-nano /mnt/etc/fstab
+nano /etc/fstab
 ```
 6. Usar a seta pra ir até a ultima linha em branco e digitar  
 
 ```
-/swapfile none swap defaults 0 0 
+/swap none swap defaults 0 0 
 ```
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
 </details>
@@ -364,7 +364,8 @@ echo "KEYMAP=br-abnt2" >> /etc/vconsole.conf
 ```
 nano /etc/locale.gen
 ```
-2. Descer com a seta e descomentar (apagar o `#` da frente) nas linhas `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`.  
+2. Usar o comando `Ctrl`+`F`, pra buscar pelo trecho `pt_BR`. Ou, Descer com a seta e descomentar (apagar o `#` da frente) nas linhas `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`. 
+
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
 
 3. Gerar o arquivo de idioma  
