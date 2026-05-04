@@ -282,14 +282,15 @@ Baixar e salvar no root: o pacote mínimo base pra instalação do sistema; um e
 
 ## 3.2 Gerar a tabela de partições pra ordem de inicialização
 
-Gerar o arquivo `fstab` usando o comando:
+1. Gerar o arquivo `fstab` usando o comando:
 ```
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
-> Dica: Algumas vezes o sistema não lista todas as partições, então é bom usar o comando abaixo, pra confirmar se já contém todas, ou se vai ser preciso repetir o processo.
+2. Confirmar se todas as partições foram listadas:
 ```
 cat /mnt/etc/fstab
 ```
+> Repetir o processo desde a criação dos pontos de montagem, se uma das partições não for listada.
 
 ## 3.3 Continuar os processos no diretório root
 
@@ -420,8 +421,8 @@ passwd usuario
 ```
 
 
-
-Instalar algumas ferramentas da internet
+## 4 Instalar algumas ferramentas obrigatórias. 
+Compatibilidade com discos de Windows, boot EFI, gerenciamento de rede Wi-Fi, dual boot e pacotes de aplicativo de terceiros.
 ```
 pacman -S iwd dosfstools mtools efibootmgr networkmanager network-manager-applet wireless_tools wpa_supplicant dialog os-prober base-devel linux-headers
 ```
