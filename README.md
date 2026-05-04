@@ -487,10 +487,22 @@ default arch-*
 ```
 nano nano boot/loader/entries/arch.conf
 ```
-title	Levi OS
-linux	/vmlinuz-linux
+4. Escrever isso e salvar
+>  Usar a tecla `Tab` depois da primeira palavra de cada linha.   
+```
+title	  Arch-Linux
+linux	  /vmlinuz-linux
 initrd	/initramfs-linux.img
-options	root=/dev/sda2 rw quiet systemd.show_status=auto vt.global_cursor_default=0
+options	root=/dev/sda2 rw
+```
+<details>  
+
+> Ao ligar/desligar o Linux, aparece várias mensagens do terminal, dá pra ocultar adicionando esse trecho no final da linha `options`  
+```
+quiet systemd.show_status=auto vt.global_cursor_default=0
+```
+</details>
+
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 
 
