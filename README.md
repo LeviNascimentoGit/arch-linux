@@ -370,7 +370,7 @@ timedatectl list-timezones
 ```
 </details>
 
-### Sincronizar o relógio da BIOS com o sistema  
+### Sincronizar o relógio da máquina com o sistema  
 ```
 hwclock --systohc
 ```
@@ -379,7 +379,7 @@ hwclock --systohc
 
 > Pode ser alterado depois de instalado. Caso isso seja feito, tem que alterar em `hosts` também.  
 ```
-echo "arch" >> /etc/hostname
+echo arch >> /etc/hostname
 ```
 
 ## 3.7 Definir os IP hosts
