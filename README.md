@@ -40,11 +40,11 @@ Já o gerenciamento de todas as extensões pode ser feito direto pelo site via n
 ### Por quê o Systemd-boot?  
 A maioria dos tutoriais que eu vi, falam de instalar o Grub como Bootloader, mas eu acho um desperdício. Porque o Arch já vem com um bootloader integrado, especialmente para quem usa UEFI que é o meu caso. Além disso, testando, eu também achei mais rápido iniciar com o Systemd-boot em vez do Grub.  
 
-### Dito tudo isso... Segue o manual de instalação abaixo.  
+### Dito tudo isso... Segue o manual de instalação abaixo.
 </details>
 
 # 1 Pré-instalação  
-O processo pode ser feito seguindo o (Manual da ArchWiki)[https://wiki.archlinux.org/title/Installation_guide]. Mas prefiro seguir este método de instalação, para deixar ele já configurado e evitar várias etapas da pós instalação.  
+O processo pode ser feito seguindo o [Manual da ArchWiki](https://wiki.archlinux.org/title/Installation_guide). Mas prefiro seguir meu método de instalação, para deixar ele já configurado e evitar várias etapas da pós instalação. Somente as etapas opcionais estão em `>detalhes`  
 
 ## 1.1 Baixar uma imagem de instalação  
 
@@ -52,20 +52,24 @@ Fazer o [Download do Arch-Linux](https://archlinux.org/download/) via Magnet Lin
 
 ## 1.2 Preparar a mídia de instalação (Pendrive ou HD)  
 
-Pode usar o [Rufus](https://rufus.ie), [Ventoy](https://www.ventoy.net/en/download.html), [Balena Etcher](https://etcher.balena.io/#download-etcher) ou o [Easy2Boot](https://easy2boot.xyz/download/) (uso esse). Caso for um Mr. Robot na vida, é só usar um desses [outros métodos](https://wiki.archlinux.org/title/USB_flash_installation_medium).  
+Pode usar o [Rufus](https://rufus.ie), [Ventoy](https://www.ventoy.net/en/download.html), [Balena Etcher](https://etcher.balena.io/#download-etcher) ou [Easy2Boot](https://easy2boot.xyz/download/) (uso esse). Caso for um Mr. Robot na vida, é só usar um desses [outros métodos](https://wiki.archlinux.org/title/USB_flash_installation_medium).  
 
-Feito isso, já pode ligar pressionando `DEL`, `ESC`, `F2`, `F4`, `F10`, `F12` ou alguma outra tecla, depende do equipamento. O importante é iniciar pelo USB no computador que vai ser instalado.  
-> A Bios da placa-mãe precisa estar com o `Secure Mode` desativado e o `UEFI Boot` habilitado. No menu de boot, tem que inciar pela opção que tem UEFI no nome.  
+## 1.3 Inicializar em modo UEFI
+1.  Entrar na BIOS da placa-mãe e Desativar o `Secure Boot` e Ativar o `Boot UEFI`.  
+2.  Dar Boot pela mídia de instalação que tem UEFI no nome.  
 
-Depois que iniciar ele vai mostrar "Welcome to Arch-Linux" e depois subir uma pá de letras. Quando parar, vai ter um trecho assim:  
-`root@archiso~#`  
+### Depois de mostrar "Welcome to Arch-Linux" e vários [OK]. Vai abrir a raiz do instalador:  
 
-Daqui em diante é escrever comandos, imaginar como se fosse uma conversa com um bot de atendimento do delivery de comida e estou apenas digitando as opções do pedido.  
-> Dica: Pra interromper qualquer processo é `CTRL`+`C` e sempre que precisar limpar a tela é `CTRL`+`L`  
+**`root@archiso ~ #`**  
 
-## 1.3 Definir o layout do teclado  
+> Dica de Atalhos:  
+> `CTRL`+`C` Interromper qualquer processo;  
+> `CTRL`+`D` Voltar para a raiz do instalador ;  
+> `CTRL`+`L` Limpar a tela.  
 
-No Brasil se usa dois tipos de teclado ABNT. No Macbook a posição das teclas é meio diferente, mas funciona igual.  
+## 1.4 Configurar o teclado pra usar no instalador  
+
+No Brasil se usa dois layout de teclado ABNT. No Macbook a posição das teclas é meio diferente, mas funciona igual.  
 
 ABNT: Teclados que **não tem** a tecla `AltGr` à direita da barra de espaço e aparece no máximo dois caracteres na mesma tecla  
 ```
@@ -75,15 +79,32 @@ ABNT2: Teclados que **tem** a tecla `AltGr` à direita da barra de espaço e apa
 ```
 loadkeys br-abnt2   
 ```
-Se não selecionar o layout correto, algumas teclas ficam digitando errado e isso vai atrapalhar. Caso seja um teclado internacional, esse comando mostra uma lista de todos os teclados:  
+
+<details> 
+
+Se não selecionar o layout correto, algumas teclas ficam digitando errado no terminal.  
+Caso seja um teclado internacional, esse comando mostra uma lista de todos os teclados:  
 ``` 
 localectl list-keymaps
 ```
+</details>
+
 <details>  
 
-## 1.4 Verificar o modo de boot  
+## 1.5 Configurar o instalador no idioma pt_BR  
+```
+nano /etc/locale.gen
+```
+1. Usar o comando `Ctrl`+`F`, pra buscar pelo trecho `pt_BR`, ou descer usando a seta do teclado. Descomentar (apagar o `#` da frente) nas linhas `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`.  
+> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
 
-Pra saber logo se vai dar certo nesse computador tem que digitar:  
+2. Aplicar o idioma
+```
+locale-gen && export LANG=pt_BR.UTF-8
+```
+> Feito isso. Já deve ficar tudo em portugês.  
+
+## 1.6 Confirmar se o computador realmente iniciou em UEFI:  
 ```
 cat /sys/firmware/efi/fw_platform_size
 ```
@@ -93,9 +114,9 @@ cat /sys/firmware/efi/fw_platform_size
 >  Nesse caso, tem que confirmar se a placa-mãe tem suporte a UEFI e se tá habilitado, se não tiver suporte, vai ter que usar o GRUB em vez do Systemd-boot.  
 </details>
 
-## 1.5 Conectar na internet  
+## 1.7 Conectar na internet  
 
-É obrigatório ter internet pra instalar o Arch-linux, porque todos os aplicativos e interface gráfica é baixado de acordo com a escolha do usuário.  
+É obrigatório ter internet pra instalar o Arch-linux, porque os pacotes são baixados de acordo com a escolha do usuário.  
 
 ### Conexão Ethernet, via cabo de rede LAN   
 Comando pra confirmar se está habilitado. Se mostrar `Enable` então já tem que estar funcionando.  
@@ -108,6 +129,7 @@ Comando pra abrir o menu de configuração:
 ```
 iwctl
 ```
+
 <details>
   
 Listar as placas de rede e saber o nome do dispositivo pra usar na próxima etapa:  
@@ -121,8 +143,7 @@ Buscar as redes disponíveis:
 > Se souber o nome exato da rede Wi-Fi, também pode pular essa etapa  
 ```
 station wlan0 scan
-```
-  
+```  
 </details>
 
 Selecionar o dispositivo de Wi-Fi e conectar na rede  
@@ -132,10 +153,8 @@ station wlan0 connect Padaria_5G
 ```
 > Digitar a `passphrase` que é a senha e confirmar no `Enter`. Se em até 10 segundos não mostrar uma mensagem de erro. É porque conectou.  
 
-Sair do menu e voltar pra instalação:  
-```
-exit
-```
+`Ctrl`+`D` Sair do menu e voltar pra instalação:  
+
 <details>
 
 Pra testar é só usar o comando de ping em algum site, assim:  
@@ -143,29 +162,29 @@ Pra testar é só usar o comando de ping em algum site, assim:
 ping google.com
 ```
 > Dica: `CTRL`+`C` pra interromper, `CTRL`+`L` pra limpar a tela.  
-
 </details>
 
-## 1.6 Definir Hora e Data pela rede  
+## 1.8 Definir Hora e Data pela rede  
 
 Sincronizar data e hora da máquina com o NTP do servidor Linux, pra evitar problema ao baixar pacotes.
 
 ```
 timedatectl set-ntp true
 ```
+
 <details>
   
 # 2 Particionar, formatar e montar as partições  
 
 Só pra esclarecer como funciona isso.  
-1. Criar a partição, que é avisar pro sistema quanto espaço do disco pode ser usado em cada partição criada. Informar que tipo de partição elas são, pra ele ver que existe partição EFI e partição normal.  
-2. Formatar as partições pra definir o formato de arquivo, nesse caso vai ser só dois: Fat32 e Btrfs.  
-3. Montar os diretórios de pasta, dentro das partições, pra poder gravar cada coisa no lugar certo durante a instalação.  
+1. Criar a partição, é avisar pro sistema quanto espaço do disco pode ser usado em cada partição criada. Informar que tipo de partição elas são, pra ele ver que existe partição EFI e partição normal.  
+2. Formatar as partições pra definir o formato de arquivo, nesse caso vai ser só dois: Fat32 e Ext4.  
+3. Montar o diretório inicial das partições, pra poder armazenar cada coisa no lugar certo durante a instalação.  
 </details>
 
 ## 2.1 Particionar o disco antes de formatar  
 
-Pra saber qual é o dispositivo, tem que usar o comando pra listar todas as unidades e descobrir pelo tipo ou pelo tamanho, o ideal é deixar conectado só o disco que vai ser formatado e a mídia de instalação, pra não apagar o disco errado por engano.  
+Listar e identificar as unidades de disco pelo tipo ou pelo tamanho, o ideal é deixar conectado só o disco que vai ser formatado e a mídia de instalação, pra não apagar o disco errado por engano.  
 ```
 lsblk
 ```
@@ -181,12 +200,13 @@ lsblk
 ```
 fdisk /dev/sda
 ```
-2. Entrar com o comando `d` e confirmar o número da partição com `Enter`, pra ir apagando as partições que já existam no disco até retornar  
+2. Entrar com o comando `d` e confirmar o número da partição com `Enter`, pra ir apagando as partições que já existam no disco até retornar:    
 `No partition is defined yet!`  
 
-3. Usar o comando `g` (minúsculo) pra criar a tabela de partição em GPT.  
+3. Usar o comando `g` pra criar uma nova tabela de partição em GPT.  
 
-### Criar a partição `/dev/sda1` <sub>(Boot, só serve pra iniciar o sistema)</sub>  
+### Criar a partição `/dev/sda1` <sub>(Boot, só serve pra iniciar o sistema)</sub> 
+
 > Sda1, 1Gb, UEFI  
 
 1. Comando `n` pra criar uma nova partição  
@@ -233,6 +253,7 @@ mkfs.fat -F32 /dev/sda1
 ```
 mkfs.ext4 /dev/sda2
 ```
+
 <details> 
 
 > Dica: Usar o comando abaixo pra ver se o formato do sistema de arquivo ficou certo em cada partição  
@@ -248,7 +269,7 @@ lsblk -f
 
 ## 2.3 Criar os pontos de montagem  
 
-Apontar pro sistema o diretório de cada partição, é importante montar os diretórios em ordem crescente, primeiro `/mnt` e depois `/mnt/boot`  
+Apontar pro sistema qual é o diretório de cada partição, é importante montar os diretórios em ordem crescente, primeiro `/mnt` e depois `/mnt/boot`  
 
 ### 1. Montar o diretório Root  
 ```
@@ -262,7 +283,7 @@ mount --mkdir /dev/sda1 /mnt/boot
 
 <details> 
 
-> Dica: Usar o comando abaixo pra ver se o `mountpoints` das partições ficou certo  
+> Dica: Confirmar se o `mountpoints` das partições ficou certo  
 ```
 lsblk -f
 ```
@@ -270,21 +291,19 @@ lsblk -f
 <img width="951" height="114" alt="image" src="https://github.com/user-attachments/assets/24d1264c-1fa5-4390-af72-df36844ea1eb" />
 
 > Partição sda1: EFI, vFAT (FAT32), /mnt/Boot  
-> Partição sda2: btrfs, /mnt  
+> Partição sda2: ext4, /mnt  
 </details>
 
 # 3 Instalação, finalmente!  
 
-O Arch é igual um Lego, tem que ir montando cada parte durante a instalação.
+O Arch é igual um Lego, tem que ir montando cada parte do sistema. 
 
 ## 3.1 Instalar o Linux
 
-Baixar os arquivos de pacote e criar o esquema de pastas no diretório raiz. Pacote mínimo base pra instalação do sistema; um editor de texto via terminal; kernel com módulos Linux; Firmware pra o funcionamento do hardware (drivers básicos).  
+Baixar os pacotes de arquivo pra criar a raiz do sistema. Pacotes base de configuração; kernel com módulos Linux; Firmware pra o funcionamento do hardware (drivers básicos); um editor de texto via terminal pra editar os arquivos de configuração.  
 ```
-pacstrap -K /mnt base nano linux linux-firmware
+pacstrap /mnt base base-devel linux linux-firmware nano
 ```
-
-Adicionar amd-code, intel-ucode ou nvidia
 
 ## 3.2 Gerar a tabela de partições pra ordem de inicialização  
 
@@ -296,13 +315,160 @@ genfstab -U /mnt >> /mnt/etc/fstab
 ```
 cat /mnt/etc/fstab
 ```
-> Repetir o processo desde a criação dos pontos de montagem, se uma das partições não for listada.  
+> Se uma das partições não for listada. Repetir o processo desde a criação dos pontos de montagem.  
 
 ## 3.3 Continuar os processos no diretório root  
 
 ```
-arch-chroot /mnt
+sudo arch-chroot -S /mnt
 ```
+
+## 3.5 Definir região, hora e idioma  
+
+### Definir o layout do teclado depois de instalado  
+> Usar a mesma referência de layout da instalação  
+```
+echo "KEYMAP=br-abnt2" >> /etc/vconsole.conf
+```
+
+### Definir idioma pra pt_BR  
+```
+nano /etc/locale.gen
+```
+1. Usar o comando `Ctrl`+`F`, pra buscar pelo trecho `pt_BR`, ou descer usando a seta do teclado. Descomentar (apagar o `#` da frente) nas linhas `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`.   
+
+> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
+
+2. Gerar o arquivo de idioma  
+```
+locale-gen
+```
+### Definir os formatos de DD/MM/AAAA e outras medidas no padrão brasileiro  
+```
+nano /etc/locale.conf
+```
+Escrever o texto:  
+```
+LANG=pt_BR.UTF-8
+LC_NUMERIC=pt_BR.UTF-8
+LC_TIME=pt_BR.UTF-8
+LC_MONETARY=pt_BR.UTF-8
+LC_PAPER=pt_BR.UTF-8
+LC_MEASUREMENT=pt_BR.UTF-8
+```
+>Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
+
+### Selecionar o fuso horário regional do computador, no meu caso é Norte do Brasil  
+```
+ln -sf /usr/share/zoneinfo/America/Belem /etc/localtime
+```
+<details>
+  
+> Dica: Pra ver todas as regiões é só usar o comando  
+```
+timedatectl list-timezones
+```
+</details>
+
+### Sincronizar o relógio da BIOS com o sistema  
+```
+hwclock --systohc
+```
+
+## 3.6 Definir o Hostname  
+
+> Pode ser alterado depois de instalado. Caso isso seja feito, tem que alterar em `hosts` também.  
+```
+echo "arch" >> /etc/hostname
+```
+## 3.7 Definir os IP hosts  
+```
+nano /etc/hosts  
+```
+Manter as linhas que já existem e escrever as linhas que estão faltando  
+>  Usar a tecla `Tab` em vez da tecla `Espaço`.  
+```
+127.0.0.1	localhost
+::1			localhost
+127.0.1.1	arch.localdomain  arch
+```
+> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
+
+## 3.8 Definir uma senha pra acesso root  
+```
+passwd
+```
+
+## 3.9 Criar um usuário  
+
+1. Descomentar (apagar o # no início) apenas na linha `%wheel ALL=(ALL:ALL) ALL` pra liberar as permissões de administrador do grupo `wheel`  
+```
+nano /etc/sudoers
+```
+2. Criar e adicionar um usuário ao grupo `wheel`  
+```
+useradd -mG wheel usuario
+```
+3. Definir uma senha para o usuario  
+```
+passwd usuario
+```
+
+<details>
+
+# 4 Pacotes de suporte <sub>(Opcionais)</sub>  
+
+### Atualizar a base de download
+```
+pacman -Sy
+```
+> Dica: O nome dos pacotes pode ser digitados na mesma linha de comando, separados pela tecla `Espaço` Ex. `pacman -Sy pacote pa-cote pa_cote`   
+
+### Preencher com os pacotes adicionais  
+
+- Dual boot  
+```
+os-prober
+```
+- Internet
+```
+networkmanager
+```
+> Esse serviço precisa ser habilitado depois de baixar o pacote
+```
+systemctl enable NetworkManager
+```
+- Wi-Fi  
+```
+iwd network-manager-applet wireless_tools wpa_supplicant
+```
+- Bluetooth    
+```
+bluez bluez-utils 
+```
+> Esse serviço precisa ser habilitado depois de baixar o pacote
+```
+systemctl enable bluetooth.service
+```
+- Suporte opcional com o mesmo nome do fabricante do chip gráfico
+```
+amd-ucode
+```
+```
+intel-ucode
+```
+```
+nvidia
+```
+- Compatibilidade com partições do Windows  
+```
+dosfstools mtools
+```
+- Compatibilidade com pacotes de aplicativos não oficiais   
+```
+dialog base-devel linux-headers
+```
+</details>
 
 <details> 
 
@@ -336,158 +502,22 @@ nano /etc/fstab
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
 </details>
 
-## 3.5 Definir região, hora e idioma  
-
-### Selecionar o fuso horário regional do computador, no meu caso é Norte do Brasil  
-```
-ln -sf /usr/share/zoneinfo/America/Belem /etc/localtime
-```
-<details>
-  
-> Dica: Pra ver todas as regiões é só usar o comando  
-```
-timedatectl list-timezones
-```
-</details>
-
-### Sincronizar o relógio da BIOS com o sistema  
-```
-hwclock --systohc
-```
-
-### Definir o layout do teclado depois de instalado  
-> Usar a mesma referência de layout da instalação  
-```
-echo "KEYMAP=br-abnt2" >> /etc/vconsole.conf
-```
-
-### Definir idioma pra pt_BR  
-1. Abrir o arquivo com a lista de idiomas  
-```
-nano /etc/locale.gen
-```
-2. Usar o comando `Ctrl`+`F`, pra buscar pelo trecho `pt_BR`. Ou, Descer com a seta e descomentar (apagar o `#` da frente) nas linhas `pt_BR.UTF-8 UTF-8` e `pt_BR ISO-8859-1`. 
-
-> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
-
-3. Gerar o arquivo de idioma  
-```
-locale-gen
-```
-### Definir os formatos de DD/MM/AAAA e outras medidas no padrão brasileiro  
-```
-nano /etc/locale.conf
-```
-Escrever o texto:  
-```
-LANG=pt_BR.UTF-8
-LC_NUMERIC=pt_BR.UTF-8
-LC_TIME=pt_BR.UTF-8
-LC_MONETARY=pt_BR.UTF-8
-LC_PAPER=pt_BR.UTF-8
-LC_MEASUREMENT=pt_BR.UTF-8
-```
->Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
-
-## 3.6 Definir o Hostname  
-
-> Pode ser alterado depois de instalado. Caso isso seja feito, tem que alterar em `hosts` também.  
-```
-echo "arch" >> /etc/hostname
-```
-## 3.7 Definir os IP hosts  
-```
-nano /etc/hosts  
-```
-Manter as linhas que já existem e escrever as linhas que estão faltando  
->  Usar a tecla `Tab` em vez da tecla `Espaço`.  
-```
-127.0.0.1	localhost
-::1			localhost
-127.0.1.1	arch.localdomain  arch
-```
-> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
-
-## 3.8 Definir uma senha pra acesso root  
-```
-passwd
-```
-
-# 4 Instalação dos pacotes  
-
-## 4.1 Instalar o suporte ao Boot UEFI <sub>(Obrigatório)</sub>
-
-```
-pacman -S efibootmgr
-```
-<details>
-
-## 4.2 Instalar pacotes úteis de suporte <sub>(Opcionais)</sub>  
-
-> Dica: Continuar digitando na mesma linha, o nome dos pacotes adicionais, separados pela tecla `Espaço`.  
-
-- Dual boot  
-```
-os-prober
-```
-- Internet
-```
-networkmanager
-```
-> Esse serviço precisa ser habilitado depois de baixar o pacote
-```
-systemctl enable NetworkManager
-```
-- Wi-Fi  
-```
-iwd network-manager-applet wireless_tools wpa_supplicant
-```
-- Bluetooth    
-```
-bluez bluez-utils 
-```
-> Esse serviço precisa ser habilitado depois de baixar o pacote
-```
-systemctl enable bluetooth.service
-```
-- Compatibilidade com partições do Windows  
-```
-dosfstools mtools
-```
-- Compatibilidade com pacotes de aplicativos não oficiais   
-```
-dialog base-devel linux-headers
-```
-</details>
-
-## 3.9 Criar um usuário  
-1. Descomentar (apagar o # no início) apenas na linha `%wheel ALL=(ALL:ALL) ALL` pra liberar as permissões de administrador do grupo `wheel`  
-```
-nano /etc/sudoers
-```
-2. Criar e adicionar um usuário ao grupo `wheel`  
-```
-useradd -mG wheel usuario
-```
-3. Definir uma senha para o usuario  
-```
-passwd usuario
-```
-
 # 5 Instalação do Bootloader  
 
 > Antes de começar é preciso voltar até o modo inicial `root@archiso~#` usando o comando  
 ```
 exit
 ```
-
-## 5.1 Instalar o Systemd-boot  
-
 1. Entrar na raiz como administrador usando o systemd  
 ```
 sudo arch-chroot -S /mnt
 ```
-2. Instalar o system-boot no diretório Boot  
+## 4.1 Instalar o suporte ao Boot UEFI <sub>(Obrigatório)</sub>  
+
+```
+pacman -S efibootmgr
+```
+## 5.1 Instalar o system-boot no diretório Boot  
 ```
 bootctl --path=/boot install
 ```
