@@ -381,7 +381,9 @@ hwclock --systohc
 ```
 echo "arch" >> /etc/hostname
 ```
-## 3.7 Definir os IP hosts  
+
+## 3.7 Definir os IP hosts
+
 ```
 nano /etc/hosts  
 ```
@@ -394,25 +396,27 @@ Manter as linhas que já existem e escrever as linhas que estão faltando
 ```
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
 
-## 3.8 Definir uma senha pra acesso root  
+## 3.8 Definir uma senha pra acesso root
+
 ```
 passwd
 ```
 
 ## 3.9 Criar um usuário  
 
-1. Descomentar (apagar o # no início) apenas na linha `%wheel ALL=(ALL:ALL) ALL` pra liberar as permissões de administrador do grupo `wheel`  
-```
-nano /etc/sudoers
-```
-2. Criar e adicionar um usuário ao grupo `wheel`  
+1. Criar e adicionar um usuário ao grupo `wheel`  
 ```
 useradd -mG wheel usuario
 ```
-3. Definir uma senha para o usuario  
+2. Definir uma senha para o usuario  
 ```
 passwd usuario
 ```
+3. Usar o comando `Ctrl`+`F`, pra buscar pelo trecho `%wheel`, ou descer usando a seta do teclado. Descomentar (apagar o `#` da frente) apenas na linha `%wheel ALL=(ALL:ALL) ALL` pra liberar as permissões de administrador do grupo `wheel`  
+```
+nano /etc/sudoers
+```
+> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
 
 <details>
 
@@ -466,7 +470,7 @@ dosfstools mtools
 ```
 - Compatibilidade com pacotes de aplicativos não oficiais   
 ```
-dialog base-devel linux-headers
+dialog linux-headers
 ```
 </details>
 
@@ -504,14 +508,6 @@ nano /etc/fstab
 
 # 5 Instalação do Bootloader  
 
-> Antes de começar é preciso voltar até o modo inicial `root@archiso~#` usando o comando  
-```
-exit
-```
-1. Entrar na raiz como administrador usando o systemd  
-```
-sudo arch-chroot -S /mnt
-```
 ## 4.1 Instalar o suporte ao Boot UEFI <sub>(Obrigatório)</sub>  
 
 ```
@@ -520,6 +516,16 @@ pacman -S efibootmgr
 ## 5.1 Instalar o system-boot no diretório Boot  
 ```
 bootctl --path=/boot install
+```
+# 6 Instalando a interface gráfica  
+
+1. Instalar o Gnome puro
+```
+sudo pacman -S gdm gnome-shell gnome-desktop gnome-session gnome-keyring gnome-control-center gnome-settings-daemon gnome-software gnome-console xdg-user-dirs-gtk adwaita-icon-theme nautilus
+```
+2. Habilitar a tela de login
+```
+sudo systemctl enable gdm
 ```
 
 ## 5.2 Configurar o Systemd-boot
@@ -555,17 +561,6 @@ quiet systemd.show_status=auto vt.global_cursor_default=0
 </details>
 
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.
-
-# 6 Instalando a interface gráfica  
-
-1. Instalar o Gnome puro
-```
-sudo pacman -S gdm gnome-shell gnome-desktop gnome-session gnome-keyring gnome-control-center gnome-settings-daemon gnome-software gnome-console xdg-user-dirs-gtk adwaita-icon-theme nautilus
-```
-2. Habilitar a tela de login
-```
-sudo systemctl enable gdm
-```
 
 # 7 Preparando pra reiniciar
 
