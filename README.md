@@ -317,6 +317,36 @@ cat /mnt/etc/fstab
 ```
 > Se uma das partições não for listada. Repetir o processo desde a criação dos pontos de montagem.  
 
+## 3.4 Criando uma partição de swap <sub>(Opcional)</sub>  
+
+1. Alocar separando uma parte do armazenamento e criando um diretório de `partição swap`  
+```
+fallocate -l 4GB /swap
+```
+2. Dar as permissões necessárias para o diretório criado  
+```
+chmod 600 /swap
+```
+3. Definir o diretório pro formato swap  
+```
+mkswap /swap
+```
+4. Ativar o diretório para o Swap  
+```
+swapon /swap
+```
+5. Adicionar o diretório na lista de partições  
+```
+nano /etc/fstab
+```
+6. Usar a seta pra ir até a ultima linha em branco e digitar  
+
+```
+/swap none swap defaults 0 0 
+```
+> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
+</details>
+
 ## 3.3 Continuar os processos no diretório root  
 
 ```
@@ -444,68 +474,19 @@ systemctl enable NetworkManager
 ```
 - Wi-Fi  
 ```
-iwd network-manager-applet wireless_tools wpa_supplicant
+iwd
 ```
 - Bluetooth    
 ```
-bluez bluez-utils 
+bluez
 ```
 > Esse serviço precisa ser habilitado depois de baixar o pacote
 ```
 systemctl enable bluetooth.service
 ```
-- Suporte opcional com o mesmo nome do fabricante do chip gráfico
-```
-amd-ucode
-```
-```
-intel-ucode
-```
-```
-nvidia
-```
-- Compatibilidade com partições do Windows  
-```
-dosfstools mtools
-```
-- Compatibilidade com pacotes de aplicativos não oficiais   
-```
-dialog linux-headers
-```
 </details>
 
 <details> 
-
-## 3.4 Criando uma partição de swap <sub>(Opcional)</sub>  
-
-1. Alocar separando uma parte do armazenamento e criando um diretório de `partição swap`  
-```
-fallocate -l 4GB /swap
-```
-2. Dar as permissões necessárias para o diretório criado  
-```
-chmod 600 /swap
-```
-3. Definir o diretório pro formato swap  
-```
-mkswap /swap
-```
-4. Ativar o diretório para o Swap  
-```
-swapon /swap
-```
-5. Adicionar o diretório na lista de partições  
-```
-nano /etc/fstab
-```
-6. Usar a seta pra ir até a ultima linha em branco e digitar  
-
-```
-/swap none swap defaults 0 0 
-```
-> Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
-</details>
-
 
 # 6 Instalando a interface gráfica  
 
