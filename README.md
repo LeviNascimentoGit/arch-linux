@@ -506,17 +506,7 @@ nano /etc/fstab
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
 </details>
 
-# 5 Instalação do Bootloader  
 
-## 4.1 Instalar o suporte ao Boot UEFI <sub>(Obrigatório)</sub>  
-
-```
-pacman -S efibootmgr
-```
-## 5.1 Instalar o system-boot no diretório Boot  
-```
-bootctl --path=/boot install
-```
 # 6 Instalando a interface gráfica  
 
 1. Instalar o Gnome puro
@@ -526,6 +516,20 @@ sudo pacman -S gdm gnome-shell gnome-desktop gnome-session gnome-keyring gnome-c
 2. Habilitar a tela de login
 ```
 sudo systemctl enable gdm
+```
+
+# 5 Instalação do Bootloader  
+
+## 4.1 Instalar o suporte ao Boot UEFI <sub>(Obrigatório)</sub>  
+
+```
+pacman -S efibootmgr
+```
+
+## 5.1 Instalar o system-boot no diretório Boot  
+
+```
+bootctl --path=/boot install
 ```
 
 ## 5.2 Configurar o Systemd-boot
@@ -542,7 +546,7 @@ default arch-*
 
 3. Criar e configurar um arquivo de entrada padrão
 ```
-nano nano boot/loader/entries/arch.conf
+nano /boot/loader/entries/arch.conf
 ```
 4. Escrever isso e salvar
 >  Usar a tecla `Tab` depois da primeira palavra de cada linha.   
@@ -565,8 +569,9 @@ quiet systemd.show_status=auto vt.global_cursor_default=0
 # 7 Preparando pra reiniciar
 
 1. Desmontar todas as partições
+
 ```
-umount -a
+umount -a -f
 ```
 2. Reiniciar e remover a mídia de instalação
 ```
