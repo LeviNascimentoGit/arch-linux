@@ -317,7 +317,7 @@ cat /mnt/etc/fstab
 ```
 > Se uma das partições não for listada. Repetir o processo desde a criação dos pontos de montagem.  
 
-## 3.4 Criando uma partição de swap <sub>(Opcional)</sub>  
+## 3.3 Criando uma partição de swap <sub>(Opcional)</sub>  
 
 1. Alocar separando uma parte do armazenamento e criando um diretório de `partição swap`  
 ```
@@ -347,7 +347,7 @@ nano /etc/fstab
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
 </details>
 
-## 3.3 Continuar os processos no diretório root  
+## 3.4 Continuar os processos no diretório root  
 
 ```
 arch-chroot -S /mnt
@@ -483,7 +483,7 @@ bluez
 systemctl enable bluetooth.service
 ```
 
-# 6 Instalando a interface gráfica  
+# 5 Instalando a interface gráfica  
 
 1. Instalar o Gnome puro
 ```
@@ -494,21 +494,21 @@ sudo pacman -S gdm gnome-shell gnome-desktop gnome-session gnome-keyring gnome-c
 sudo systemctl enable gdm
 ```
 
-# 5 Instalação do Bootloader  
+# 6 Instalação do Bootloader  
 
-## 4.1 Instalar o suporte ao Boot UEFI <sub>(Obrigatório)</sub>  
+## 6.1 Instalar o suporte ao Boot UEFI <sub>(Obrigatório)</sub>  
 
 ```
 pacman -S efibootmgr
 ```
 
-## 5.1 Instalar o system-boot no diretório Boot  
+## 6.2 Instalar o system-boot no diretório Boot  
 
 ```
 bootctl --path=/boot install
 ```
 
-## 5.2 Configurar o Systemd-boot
+## 6.3 Configurar o Systemd-boot
 
 1. Abrir o arquivo de configuração de entrada padrão
 ```
