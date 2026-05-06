@@ -355,7 +355,7 @@ nano /etc/fstab
 > Dica: `CTRL`+`O` pra salvar, `Enter` pra confirmar. `CTRL`+`X` pra fechar.  
 </details>
 
-## 3.5 Definir região, hora e idioma  
+## 3.5 Configurar teclado, idioma, formato padrão, região e hora  
 
 ### Definir o layout do teclado depois de instalado  
 > Usar a mesma referência de layout da instalação  
