@@ -546,66 +546,14 @@ quiet systemd.show_status=auto vt.global_cursor_default=0
 
 # 7 Preparando pra reiniciar
 
-1. Desmontar todas as partições
+1. `Ctrl`+`D` pra fechar o `[root@archiso ~ #]` e voltar pra raiz do instalador **`root@archiso ~ #`**  
+
+2. Desmontar todas as partições
 
 ```
 umount -a -f
 ```
-2. Reiniciar e remover a mídia de instalação
+3. Reiniciar e remover a mídia de instalação
 ```
 reboot
 ``` 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
